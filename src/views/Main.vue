@@ -1,14 +1,8 @@
 <template>
   <v-app id="inspire">
-    <v-navigation-drawer v-model="drawer" app>
-      <!--  -->
-    </v-navigation-drawer>
+    <Menu />
 
-    <v-app-bar app>
-      <v-app-bar-nav-icon @click="drawer = !drawer"></v-app-bar-nav-icon>
-
-      <v-toolbar-title>Application</v-toolbar-title>
-    </v-app-bar>
+    <Header />
 
     <v-main>
       <router-view />
@@ -17,7 +11,14 @@
 </template>
 
 <script>
+import Header from "@/layout/header";
+import Menu from "@/layout/menu";
 export default {
+  components: {
+    Header,
+    Menu,
+  },
+
   data: () => ({ drawer: null }),
 };
 </script>
