@@ -46,7 +46,7 @@
                 :items="refKabupaten"
                 item-text="kabupaten_nama"
                 item-value="kabupaten_id"
-                v-model="kabupaten_id"
+                v-model="kabupaten"
                 return-object
                 @change="selectKecamatan"
               ></v-autocomplete>
@@ -236,7 +236,7 @@ export default {
     desa_yt: "",
     desa_status_pemerintahan: "",
     desa_foto: "",
-    kabupaten_id: "",
+    kabupaten: "",
     kecamatan_id: "",
     urlImage: "",
   }),
@@ -260,7 +260,7 @@ export default {
       data.append("desa_yt", this.desa_yt);
       data.append("desa_status_pemerintahan", this.desa_status_pemerintahan);
       data.append("desa_foto", this.desa_foto);
-      data.append("kabupaten_id", this.kabupaten_id);
+      data.append("kabupaten_id", this.kabupaten.kabupaten_id);
       data.append("kecamatan_id", this.kecamatan_id);
 
       const url = process.env.VUE_APP_API_BASE + "desainfo";
