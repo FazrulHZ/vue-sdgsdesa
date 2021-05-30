@@ -6,13 +6,24 @@ Vue.use(Vuex)
 export default new Vuex.Store({
     state: {
         modalEdit: false,
-        grup: {
-            grup_id: '',
-            grup_nama: '',
-            grup_slug: '',
-            grup_foto: '',
-            grup_deskripsi: '',
-            created_at: ''
+        desa: {
+            desa_id: "",
+            desa_nama: "",
+            desa_slug: "",
+            desa_email: "",
+            desa_web: "",
+            desa_fb: "",
+            desa_twitter: "",
+            desa_ig: "",
+            desa_yt: "",
+            desa_status_pemerintahan: "",
+            desa_foto: "",
+            kabupaten_id: "",
+            kecamatan_id: "",
+            created_at: "",
+            kabupaten_nama: "",
+            update_at: "",
+            kecamatan_nama: ""
         }
     },
 
@@ -21,7 +32,7 @@ export default new Vuex.Store({
             state.modalEdit = value
         },
         viewModal(state, value) {
-            state.grup = value
+            state.desa = value
         }
     }
 })
