@@ -7,7 +7,7 @@ export default new Vuetify({
     theme: {
         themes: {
             light: {
-                CGray: '#EDF2F7'
+                utama: '#68D391'
             }
         }
     }

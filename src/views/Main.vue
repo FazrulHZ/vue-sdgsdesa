@@ -4,8 +4,10 @@
 
     <Header />
 
-    <v-main>
-      <router-view />
+    <v-main style="background: #EEEEEE;">
+      <v-container class="pa-5">
+        <router-view />
+      </v-container>
     </v-main>
   </v-app>
 </template>

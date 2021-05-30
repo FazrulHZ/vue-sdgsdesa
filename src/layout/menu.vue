@@ -1,10 +1,10 @@
 <template>
   <v-navigation-drawer v-model="drawer" app>
     <v-list dense>
-      <v-list-item-group active-class="primary--text text--accent-4">
+      <v-list-item-group active-class="utama--text text--accent-4">
         <v-list-item class="py-2">
-          <v-list-item-title>
-            <h2 class="primary--text">
+          <v-list-item-title class="text-center">
+            <h2 class="utama--text">
               SDGs Desa
             </h2>
           </v-list-item-title>
@@ -17,6 +17,13 @@
             <v-icon>mdi-home-outline</v-icon>
           </v-list-item-icon>
           <v-list-item-title>Home</v-list-item-title>
+        </v-list-item>
+
+        <v-list-item :to="'/desa'">
+          <v-list-item-icon>
+            <v-icon>mdi-home-group</v-icon>
+          </v-list-item-icon>
+          <v-list-item-title>Survei Desa</v-list-item-title>
         </v-list-item>
       </v-list-item-group>
     </v-list>

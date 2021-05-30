@@ -1,8 +1,8 @@
 <template>
-  <v-app-bar app>
+  <v-app-bar color="utama" dark app>
     <v-app-bar-nav-icon @click="toggleDrawer()"></v-app-bar-nav-icon>
 
-    <v-toolbar-title>Application</v-toolbar-title>
+    <v-toolbar-title>Sustainable Development Goals</v-toolbar-title>
   </v-app-bar>
 </template>
 
