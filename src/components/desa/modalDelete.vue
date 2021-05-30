@@ -1,8 +1,8 @@
 <template>
-  <v-dialog v-model="modalHapus" max-width="50%">
+  <v-dialog v-model="modalHapus" :width="CWidth">
     <v-card>
-      <v-toolbar dark color="primary" dense flat>
-        <v-toolbar-title class="subtitle-1">Hapus Data desa</v-toolbar-title>
+      <v-toolbar dark color="utama" dense flat>
+        <v-toolbar-title>Hapus Data desa</v-toolbar-title>
         <v-spacer></v-spacer>
         <v-btn icon dark @click="closeModal()">
           <v-icon>mdi-close</v-icon>
@@ -21,9 +21,20 @@
 
           <hr />
           <div class="text-right mr-5 mt-5">
-            <v-btn class="mr-2" v-if="btnLoading" color="error" depressed @click="hapus()">Ya</v-btn>
-            <v-btn class="mr-2" v-else color="error" depressed loading>Ya</v-btn>
-            <v-btn class="black--text" color="secondary" @click="closeModal()" depressed light>Tidak</v-btn>
+            <v-btn
+              class="mr-2"
+              v-if="btnLoading"
+              color="error"
+              depressed
+              @click="hapus()"
+              >Ya</v-btn
+            >
+            <v-btn class="mr-2" v-else color="error" depressed loading
+              >Ya</v-btn
+            >
+            <v-btn class="black--text" @click="closeModal()" depressed light
+              >Tidak</v-btn
+            >
           </div>
         </div>
       </v-form>
@@ -32,73 +43,82 @@
 </template>
 
 <script>
-import modalHapus from '@/store/desa/modalHapus'
-import refreshView from '@/store/desa/viewDesa'
+import modalHapus from "@/store/desa/modalHapus";
+import refreshView from "@/store/desa/viewDesa";
 
 export default {
   computed: {
     modalHapus: {
       get() {
-        return modalHapus.state.modalHapus
+        return modalHapus.state.modalHapus;
       },
       set(value) {
-        modalHapus.commit('toggleModal', value)
-      }
+        modalHapus.commit("toggleModal", value);
+      },
     },
     hapusItem: {
       get() {
-        return modalHapus.state.desa
+        return modalHapus.state.desa;
       },
       set(value) {
-        console.log(value)
-      }
+        console.log(value);
+      },
+    },
+  },
+
+  created() {
+    if (
+      this.$vuetify.breakpoint.name == "xs" ||
+      this.$vuetify.breakpoint.name == "sm"
+    ) {
+      this.CWidth = "100%";
     }
   },
 
   data: () => ({
     btnLoading: true,
-    org_foto: '',
-    urlImage: ''
+    CWidth: "50%",
   }),
 
   methods: {
     async hapus() {
-      this.btnLoading = false
+      this.btnLoading = false;
 
-      const url = process.env.VUE_APP_API_BASE + 'desa/' + this.hapusItem.desa_id
+      const url =
+        process.env.VUE_APP_API_BASE + "desainfo/" + this.hapusItem.desa_id;
       this.http
         .delete(url)
-        .then(response => {
-          this.btnLoading = true
+        .then((response) => {
+          this.btnLoading = true;
           if (response.data.success) {
-            refreshView.commit('refreshData', true)
-            refreshView.commit('alert', response.data.message)
-            refreshView.commit('berhasilAlert', true)
-            refreshView.commit('gagalAlert', false)
-            refreshView.commit('success', response.data.success)
+            refreshView.commit("refreshData", true);
+            refreshView.commit("alert", response.data.message);
+            refreshView.commit("berhasilAlert", true);
+            refreshView.commit("gagalAlert", false);
+            refreshView.commit("success", response.data.success);
           } else {
-            refreshView.commit('refreshData', true)
-            refreshView.commit('alert', response.data.message)
-            refreshView.commit('gagalAlert', true)
-            refreshView.commit('berhasilAlert', false)
-            refreshView.commit('success', response.data.success)
+            refreshView.commit("refreshData", true);
+            refreshView.commit("alert", response.data.message);
+            refreshView.commit("gagalAlert", true);
+            refreshView.commit("berhasilAlert", false);
+            refreshView.commit("success", response.data.success);
           }
-          this.closeModal()
+          this.closeModal();
         })
-        .catch(error => {
-          refreshView.commit('refreshData', true)
-          refreshView.commit('alert', error.response.data.message)
-          refreshView.commit('gagalAlert', true)
-          refreshView.commit('berhasilAlert', false)
-          refreshView.commit('success', error.response.data.success)
-          console.log(error.response.status)
-          this.btnLoading = true
-        })
+        .catch((error) => {
+          refreshView.commit("refreshData", true);
+          refreshView.commit("alert", error.response.data.message);
+          refreshView.commit("gagalAlert", true);
+          refreshView.commit("berhasilAlert", false);
+          refreshView.commit("success", error.response.data.success);
+          console.log(error.response.status);
+          this.btnLoading = true;
+        });
     },
 
     closeModal() {
-      this.modalHapus = false
-    }
-  }
-}
+      this.modalHapus = false;
+    },
+  },
+};
 </script>
