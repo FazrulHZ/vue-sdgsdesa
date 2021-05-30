@@ -7,7 +7,8 @@ export default new Vuetify({
     theme: {
         themes: {
             light: {
-                utama: '#68D391'
+                // utama: '#68D391'
+                utama: '#800000'
             }
         }
     }
