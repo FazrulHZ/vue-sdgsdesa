@@ -1,9 +1,21 @@
 <template>
-  <v-dialog v-model="ModalAdd" max-width="50%">
+  <v-dialog
+    v-model="ModalAdd"
+    fullscreen
+    hide-overlay
+    transition="dialog-bottom-transition"
+  >
     <template v-slot:activator="{ on: modal, attrs }">
       <v-tooltip bottom>
         <template v-slot:activator="{ on: tooltip }">
-          <v-btn small fab text v-bind="attrs" v-on="{ ...tooltip, ...modal }">
+          <v-btn
+            small
+            fab
+            text
+            v-bind="attrs"
+            v-on="{ ...tooltip, ...modal }"
+            @click="openModal()"
+          >
             <v-icon>mdi-plus-box</v-icon>
           </v-btn>
         </template>
@@ -12,43 +24,155 @@
     </template>
 
     <v-card>
-      <v-toolbar dark color="primary" dense flat>
-        <v-toolbar-title class="subtitle-1">Tambah Grup</v-toolbar-title>
+      <v-toolbar dark color="utama" dense flat>
+        <v-toolbar-title>Tambah RT/RW</v-toolbar-title>
         <v-spacer></v-spacer>
         <v-btn icon dark @click="ModalAdd = false">
           <v-icon>mdi-close</v-icon>
         </v-btn>
       </v-toolbar>
 
-      <v-form ref="form">
-        <div class="ml-5 mr-5 mt-5">
-          <!-- Nama Grup -->
-          <v-col cols="12" class="mb-n8">
-            <span class="subtitle-2">Nama Grup</span>
-            <v-text-field dense flat outlined class="mt-2" v-model="grup_nama"></v-text-field>
-          </v-col>
+      <v-form ref="form" lazy-validation>
+        <div class="mx-7 mt-5">
+          <v-row>
+            <!-- Kabupaten / Kota -->
+            <v-col cols="12" md="4" class="mb-n8">
+              <span class="subtitle-2">Kabupaten / Kota</span>
+              <v-autocomplete
+                dense
+                flat
+                outlined
+                class="mt-2"
+                :items="refKabupaten"
+                item-text="kabupaten_nama"
+                item-value="kabupaten_id"
+                v-model="kabupaten"
+                return-object
+                @change="selectKecamatan"
+              ></v-autocomplete>
+            </v-col>
 
-          <!-- Deskripsi Grup -->
-          <v-col cols="12" class="mb-n8">
-            <span class="subtitle-2">Deskripsi Grup</span>
-            <v-text-field dense flat outlined class="mt-2" v-model="grup_deskripsi"></v-text-field>
-          </v-col>
+            <!-- Kecamatan -->
+            <v-col cols="12" md="4" class="mb-n8">
+              <span class="subtitle-2">Kecamatan</span>
+              <v-autocomplete
+                dense
+                flat
+                outlined
+                class="mt-2"
+                :items="refKecamatan"
+                item-text="kecamatan_nama"
+                item-value="kecamatan_id"
+                v-model="kecamatan"
+                return-object
+                @change="selectDesa"
+              ></v-autocomplete>
+            </v-col>
 
-          <!-- Foto -->
-          <v-col cols="12" class="mb-n8">
-            <span class="subtitle-2">Foto</span>
-            <v-file-input dense flat outlined prepend-icon accept="image/png, image/jpeg, image/bmp" placeholder="Pilih Foto Grup" append-icon="mdi-camera" @change="onFile" ref="avatar"></v-file-input>
-          </v-col>
+            <!-- Desa -->
+            <v-col cols="12" md="4" class="mb-n8">
+              <span class="subtitle-2">Desa</span>
+              <v-autocomplete
+                dense
+                flat
+                outlined
+                class="mt-2"
+                :items="refDesa"
+                item-text="desa_nama"
+                item-value="desa_id"
+                v-model="desa_id"
+              ></v-autocomplete>
+            </v-col>
+          </v-row>
 
-          <!-- Preview -->
-          <v-col cols="12">
-            <v-img :src="urlImage" max-width="200"></v-img>
-          </v-col>
+          <v-row>
+            <!-- Nama RT/RW -->
+            <v-col cols="12" md="3" class="mb-n8">
+              <span class="subtitle-2">Nama RT/RW</span>
+              <v-text-field
+                dense
+                flat
+                outlined
+                placeholder="No. RT/RW"
+                class="mt-2"
+                :rules="rt_namaRules"
+                v-model="rt_nama"
+              ></v-text-field>
+            </v-col>
+
+            <!-- Nama Ketua RT/RW -->
+            <v-col cols="12" md="9" class="mb-n8">
+              <span class="subtitle-2">Nama Ketua RT/RW</span>
+              <v-text-field
+                dense
+                flat
+                outlined
+                class="mt-2"
+                v-model="rt_ketua"
+              ></v-text-field>
+            </v-col>
+          </v-row>
+
+          <v-row>
+            <!-- Alamat RT/RW -->
+            <v-col cols="12" class="mb-n8">
+              <span class="subtitle-2">Alamat RT/RW</span>
+              <v-textarea
+                dense
+                flat
+                outlined
+                class="mt-2"
+                v-model="rt_alamat"
+              ></v-textarea>
+            </v-col>
+          </v-row>
+
+          <v-row>
+            <!-- RT/RW Telpon -->
+            <v-col cols="12" md="2" class="mb-n8">
+              <span class="subtitle-2">RT/RW Telpon</span>
+              <v-text-field
+                dense
+                flat
+                outlined
+                class="mt-2"
+                append-icon="mdi-phone"
+                v-model="rt_tlp"
+              ></v-text-field>
+            </v-col>
+
+            <!-- Topografi RT/RW -->
+            <v-col cols="12" md="8" class="mb-n8">
+              <span class="subtitle-2">Topografi RT/RW</span>
+              <v-text-field
+                dense
+                flat
+                outlined
+                class="mt-2"
+                v-model="rt_topografi"
+              ></v-text-field>
+            </v-col>
+
+            <!-- Jumlah Warga RT/RW -->
+            <v-col cols="12" md="2">
+              <span class="subtitle-2">Jumlah Warga RT/RW</span>
+              <v-text-field
+                dense
+                flat
+                outlined
+                class="mt-2"
+                append-icon="mdi-account-group"
+                v-model="rt_jumlah_warga"
+              ></v-text-field>
+            </v-col>
+          </v-row>
 
           <hr />
           <div class="text-right mr-5 mt-5 pb-5">
-            <v-btn v-if="btnLoading" small color="primary" depressed @click="add()">SIMPAN</v-btn>
-            <v-btn v-else small color="primary" depressed loading>SIMPAN</v-btn>
+            <v-btn v-if="btnLoading" color="primary" depressed @click="add()"
+              >SIMPAN</v-btn
+            >
+            <v-btn v-else color="primary" depressed loading>SIMPAN</v-btn>
           </div>
         </div>
       </v-form>
@@ -57,66 +181,98 @@
 </template>
 
 <script>
-import refreshView from '@/store/grup/viewGrup'
+import refreshView from "@/store/rt/viewRt";
+import getRef from "@/helper/getRef.js";
+
 export default {
   data: () => ({
     ModalAdd: false,
     btnLoading: true,
-    grup_nama: '',
-    grup_foto: '',
-    grup_deskripsi: '',
-    urlImage: ''
+
+    refKabupaten: [],
+    refKecamatan: [],
+    refDesa: [],
+
+    rt_nama: "",
+    rt_namaRules: [
+      (v) =>
+        v.split(" ").length <= 1 ||
+        "Harap jangan menggunakan spasi, contoh (001/001)",
+    ],
+
+    rt_ketua: "",
+    rt_alamat: "",
+    rt_tlp: "",
+    rt_topografi: "",
+    rt_jumlah_warga: "",
+    kabupaten: "",
+    kecamatan: "",
+    desa_id: "",
   }),
 
   methods: {
-    async add() {
-      this.btnLoading = false
-
-      const data = new FormData()
-      data.append('grup_nama', this.grup_nama)
-      data.append('grup_foto', this.grup_foto)
-      data.append('grup_deskripsi', this.grup_deskripsi)
-
-      const url = process.env.VUE_APP_API_BASE + 'grup'
-      this.http
-        .post(url, data)
-        .then(response => {
-          this.btnLoading = true
-          if (response.data.success) {
-            refreshView.commit('refreshData', true)
-            refreshView.commit('alert', response.data.message)
-            refreshView.commit('berhasilAlert', true)
-            refreshView.commit('gagalAlert', false)
-            refreshView.commit('success', response.data.success)
-          } else {
-            refreshView.commit('refreshData', true)
-            refreshView.commit('alert', response.data.message)
-            refreshView.commit('gagalAlert', true)
-            refreshView.commit('berhasilAlert', false)
-            refreshView.commit('success', response.data.success)
-          }
-          this.closeModal()
-        })
-        .catch(error => {
-          refreshView.commit('refreshData', true)
-          refreshView.commit('alert', error.response.data.message)
-          refreshView.commit('gagalAlert', true)
-          refreshView.commit('berhasilAlert', false)
-          refreshView.commit('success', error.response.data.success)
-          console.log(error.response.status)
-          this.btnLoading = true
-        })
+    async openModal() {
+      this.refKabupaten = await getRef.Kabupaten();
+      this.ModalAdd = true;
     },
 
-    onFile(value) {
-      this.grup_foto = value
-      this.urlImage = URL.createObjectURL(this.grup_foto)
-      console.log(value)
+    async add() {
+      this.btnLoading = false;
+
+      const data = {
+        rt_nama: this.rt_nama,
+        rt_ketua: this.rt_ketua,
+        rt_alamat: this.rt_alamat,
+        rt_tlp: this.rt_tlp,
+        rt_topografi: this.rt_topografi,
+        rt_jumlah_warga: this.rt_jumlah_warga,
+        kabupaten_id: this.kabupaten.kabupaten_id,
+        kecamatan_id: this.kecamatan.kecamatan_id,
+        desa_id: this.desa_id,
+      };
+
+      const url = process.env.VUE_APP_API_BASE + "rt";
+      this.http
+        .post(url, data)
+        .then((response) => {
+          this.btnLoading = true;
+          if (response.data.success) {
+            refreshView.commit("refreshData", true);
+            refreshView.commit("alert", response.data.message);
+            refreshView.commit("berhasilAlert", true);
+            refreshView.commit("gagalAlert", false);
+            refreshView.commit("success", response.data.success);
+          } else {
+            refreshView.commit("refreshData", true);
+            refreshView.commit("alert", response.data.message);
+            refreshView.commit("gagalAlert", true);
+            refreshView.commit("berhasilAlert", false);
+            refreshView.commit("success", response.data.success);
+          }
+          this.closeModal();
+        })
+        .catch((error) => {
+          refreshView.commit("refreshData", true);
+          refreshView.commit("alert", error.response.data.message);
+          refreshView.commit("gagalAlert", true);
+          refreshView.commit("berhasilAlert", false);
+          refreshView.commit("success", error.response.data.success);
+          console.log(error.response.status);
+          this.btnLoading = true;
+        });
+    },
+
+    async selectKecamatan(value) {
+      this.refKecamatan = await getRef.Kecamatan(value.kabupaten_id);
+    },
+
+    async selectDesa(value) {
+      this.refDesa = await getRef.Desa(value.kecamatan_id);
     },
 
     closeModal() {
-      this.ModalAdd = false
-    }
-  }
-}
+      this.ModalAdd = false;
+    },
+  },
+};
 </script>

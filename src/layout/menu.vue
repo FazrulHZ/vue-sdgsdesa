@@ -25,6 +25,13 @@
           </v-list-item-icon>
           <v-list-item-title>Survei Desa</v-list-item-title>
         </v-list-item>
+
+        <v-list-item :to="'/rt'">
+          <v-list-item-icon>
+            <v-icon>mdi-home-city-outline</v-icon>
+          </v-list-item-icon>
+          <v-list-item-title>RT/RW</v-list-item-title>
+        </v-list-item>
       </v-list-item-group>
     </v-list>
   </v-navigation-drawer>

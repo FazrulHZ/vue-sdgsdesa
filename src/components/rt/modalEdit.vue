@@ -2,7 +2,7 @@
   <v-dialog v-model="modalEdit" max-width="50%">
     <v-card>
       <v-toolbar dark color="primary" dense flat>
-        <v-toolbar-title class="subtitle-1">Edit Data grup</v-toolbar-title>
+        <v-toolbar-title class="subtitle-1">Edit Data rt</v-toolbar-title>
         <v-spacer></v-spacer>
         <v-btn icon dark @click="closeModal()">
           <v-icon>mdi-close</v-icon>
@@ -11,28 +11,28 @@
 
       <v-form ref="form">
         <div class="px-5 py-5">
-          <!-- Nama Grup -->
+          <!-- Nama rt -->
           <v-col cols="12" class="mb-n8">
-            <span class="subtitle-2">Nama Grup</span>
-            <v-text-field dense flat outlined class="mt-2" v-model="editedItem.grup_nama"></v-text-field>
+            <span class="subtitle-2">Nama rt</span>
+            <v-text-field dense flat outlined class="mt-2" v-model="editedItem.rt_nama"></v-text-field>
           </v-col>
 
-          <!-- Nama Grup -->
+          <!-- Nama rt -->
           <v-col cols="12" class="mb-n8">
-            <span class="subtitle-2">Deskripsi Grup</span>
-            <v-text-field dense flat outlined class="mt-2" v-model="editedItem.grup_deskripsi"></v-text-field>
+            <span class="subtitle-2">Deskripsi rt</span>
+            <v-text-field dense flat outlined class="mt-2" v-model="editedItem.rt_deskripsi"></v-text-field>
           </v-col>
 
           <!-- Preview -->
           <v-col cols="12">
-            <span class="subtitle-2">Foto Grup</span>
-            <v-img :src="getIMG(editedItem.grup_foto)" max-width="200"></v-img>
+            <span class="subtitle-2">Foto rt</span>
+            <v-img :src="getIMG(editedItem.rt_foto)" max-width="200"></v-img>
           </v-col>
 
           <!-- Foto -->
           <v-col cols="12" class="mb-n8">
             <span class="subtitle-2">Unggah Foto Baru</span>
-            <v-file-input dense flat outlined prepend-icon accept="image/png, image/jpeg, image/bmp" placeholder="Pilih Foto grup" append-icon="mdi-camera" @change="onFile" ref="avatar"></v-file-input>
+            <v-file-input dense flat outlined prepend-icon accept="image/png, image/jpeg, image/bmp" placeholder="Pilih Foto rt" append-icon="mdi-camera" @change="onFile" ref="avatar"></v-file-input>
           </v-col>
 
           <!-- Preview -->
@@ -52,8 +52,8 @@
 </template>
 
 <script>
-import modalEdit from '@/store/grup/modalEdit'
-import refreshView from '@/store/grup/viewGrup'
+import modalEdit from '@/store/rt/modalEdit'
+import refreshView from '@/store/rt/viewRt'
 
 export default {
   computed: {
@@ -67,7 +67,7 @@ export default {
     },
     editedItem: {
       get() {
-        return modalEdit.state.grup
+        return modalEdit.state.rt
       },
       set(value) {
         console.log(value)
@@ -77,14 +77,14 @@ export default {
 
   data: () => ({
     btnLoading: true,
-    grup_foto: '',
+    rt_foto: '',
     urlImage: ''
   }),
 
   methods: {
     getIMG(value) {
       if (value) {
-        return 'http://localhost:3000/upload/grupGambar/' + value
+        return 'http://localhost:3000/upload/rtGambar/' + value
       } else {
         return 'http://localhost:3000/upload/default.svg'
       }
@@ -94,12 +94,12 @@ export default {
       this.btnLoading = false
 
       const data = new FormData()
-      data.append('grup_id', this.editedItem.grup_id)
-      data.append('grup_nama', this.editedItem.grup_nama)
-      data.append('grup_deskripsi', this.editedItem.grup_deskripsi)
-      data.append('grup_foto', this.grup_foto)
+      data.append('rt_id', this.editedItem.rt_id)
+      data.append('rt_nama', this.editedItem.rt_nama)
+      data.append('rt_deskripsi', this.editedItem.rt_deskripsi)
+      data.append('rt_foto', this.rt_foto)
 
-      const url = process.env.VUE_APP_API_BASE + 'grup'
+      const url = process.env.VUE_APP_API_BASE + 'rt'
       this.http
         .put(url, data)
         .then(response => {
@@ -131,8 +131,8 @@ export default {
     },
 
     onFile(value) {
-      this.grup_foto = value
-      this.urlImage = URL.createObjectURL(this.grup_foto)
+      this.rt_foto = value
+      this.urlImage = URL.createObjectURL(this.rt_foto)
     },
 
     closeModal() {
