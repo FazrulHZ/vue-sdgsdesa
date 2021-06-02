@@ -3,7 +3,7 @@
     <div>
       <v-card outlined class="py-3 px-5 mb-5 elevation-2">
         <v-row no-gutters>
-          <h3 class="my-auto">Data Desa</h3>
+          <h3 class="my-auto">Data Kartu Keluarga</h3>
           <v-spacer></v-spacer>
           <CModalAdd />
         </v-row>
@@ -21,7 +21,7 @@
 
     <v-data-table
       :headers="headers"
-      :items="desas"
+      :items="rts"
       item-key="name"
       class="elevation-1"
     >
@@ -32,7 +32,7 @@
       </template>
       <template v-slot:[`item.nomor`]="{ item }">
         {{
-          desas
+          rts
             .map(function(x) {
               return x.org_id;
             })
@@ -55,14 +55,15 @@
 </template>
 
 <script>
-import CModalAdd from "@/components/desa/modalAdd";
-import CModalEdit from "@/components/desa/modalEdit";
-import CModalDelete from "@/components/desa/modalDelete";
-import CModalView from "@/components/desa/modalView";
-import modalView from "@/store/desa/modalView";
-import modalEdit from "@/store/desa/modalEdit";
-import modalHapus from "@/store/desa/modalHapus";
-import refreshView from "@/store/desa/viewDesa";
+import CModalAdd from "@/components/kk/modalAdd";
+import CModalEdit from "@/components/kk/modalEdit";
+import CModalDelete from "@/components/kk/modalDelete";
+import CModalView from "@/components/kk/modalView";
+
+import modalView from "@/store/kk/modalView";
+import modalEdit from "@/store/kk/modalEdit";
+import modalHapus from "@/store/kk/modalHapus";
+import refreshView from "@/store/kk/viewKk";
 
 export default {
   components: {
@@ -117,8 +118,8 @@ export default {
     },
   },
   data: () => ({
-    desas: [],
-    desa: {},
+    rts: [],
+    rt: {},
     viewIndex: "",
     editedIndex: "",
     dleteIndex: "",
@@ -130,7 +131,10 @@ export default {
         align: "center",
         sortable: false,
       },
-      { text: "Nama desa", align: "start", value: "desa_nama" },
+      { text: "No. Kartu Keluarga", align: "start", value: "kk_no" },
+      { text: "Nama Kepala Keluarga", align: "start", value: "kk_nama" },
+      { text: "RT/RW", align: "start", value: "rt_nama" },
+      { text: "Desa", align: "start", value: "desa_nama" },
       { text: "Kecamatan", align: "start", value: "kecamatan_nama" },
       { text: "Kabupaten", align: "start", value: "kabupaten_nama" },
       { text: "Action", value: "action", width: "100px" },
@@ -142,30 +146,30 @@ export default {
   methods: {
     getData() {
       this.http
-        .get(process.env.VUE_APP_API_BASE + "desainfo")
+        .get(process.env.VUE_APP_API_BASE + "kk")
         .then((res) => {
           refreshView.commit("refreshData", false);
-          this.desas = res.data.data;
+          this.rts = res.data.data;
         })
         .catch((err) => {
           console.log(err);
         });
     },
     viewItem(item) {
-      this.viewIndex = this.desas.indexOf(item);
-      this.desa = Object.assign({}, item);
+      this.viewIndex = this.rts.indexOf(item);
+      this.rt = Object.assign({}, item);
       modalView.commit("toggleModal", true);
       modalView.commit("viewModal", Object.assign({}, item));
     },
     editItem(item) {
-      this.editedIndex = this.desas.indexOf(item);
-      this.desa = Object.assign({}, item);
+      this.editedIndex = this.rts.indexOf(item);
+      this.rt = Object.assign({}, item);
       modalEdit.commit("toggleModal", true);
       modalEdit.commit("viewModal", Object.assign({}, item));
     },
     deleteItem(item) {
-      this.dleteIndex = this.desas.indexOf(item);
-      this.desa = Object.assign({}, item);
+      this.dleteIndex = this.rts.indexOf(item);
+      this.rt = Object.assign({}, item);
       modalHapus.commit("toggleModal", true);
       modalHapus.commit("viewModal", Object.assign({}, item));
     },

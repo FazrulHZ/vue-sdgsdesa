@@ -1,0 +1,123 @@
+<template>
+  <v-dialog v-model="modalHapus" :width="CWidth">
+    <v-card>
+      <v-toolbar dark color="utama" dense flat>
+        <v-toolbar-title class="subtitle-1">Hapus Data Kartu Keluarga</v-toolbar-title>
+        <v-spacer></v-spacer>
+        <v-btn icon dark @click="closeModal()">
+          <v-icon>mdi-close</v-icon>
+        </v-btn>
+      </v-toolbar>
+
+      <v-form ref="form">
+        <div class="px-5 py-5">
+          <v-col cols="12" class="mb-n5">
+            <h3>Apakah Anda Yakin Menghapus Data Ini?</h3>
+          </v-col>
+
+          <v-col cols="12">
+            <span>Data yang telah dihapus tidak akan bisa dikembalikan!</span>
+          </v-col>
+
+          <hr />
+          <div class="text-right mr-5 mt-5">
+            <v-btn
+              class="mr-2"
+              v-if="btnLoading"
+              color="error"
+              depressed
+              @click="hapus()"
+              >Ya</v-btn
+            >
+            <v-btn class="mr-2" v-else color="error" depressed loading
+              >Ya</v-btn
+            >
+            <v-btn class="black--text" @click="closeModal()" depressed light
+              >Tidak</v-btn
+            >
+          </div>
+        </div>
+      </v-form>
+    </v-card>
+  </v-dialog>
+</template>
+
+<script>
+import modalHapus from "@/store/kk/modalHapus";
+import refreshView from "@/store/kk/viewKk";
+
+export default {
+  computed: {
+    modalHapus: {
+      get() {
+        return modalHapus.state.modalHapus;
+      },
+      set(value) {
+        modalHapus.commit("toggleModal", value);
+      },
+    },
+    hapusItem: {
+      get() {
+        return modalHapus.state.kk;
+      },
+      set(value) {
+        console.log(value);
+      },
+    },
+  },
+
+  created() {
+    if (
+      this.$vuetify.breakpoint.name == "xs" ||
+      this.$vuetify.breakpoint.name == "sm"
+    ) {
+      this.CWidth = "100%";
+    }
+  },
+
+  data: () => ({
+    btnLoading: true,
+    CWidth: "50%",
+  }),
+
+  methods: {
+    async hapus() {
+      this.btnLoading = false;
+
+      const url = process.env.VUE_APP_API_BASE + "kk/" + this.hapusItem.kk_id;
+      this.http
+        .delete(url)
+        .then((response) => {
+          this.btnLoading = true;
+          if (response.data.success) {
+            refreshView.commit("refreshData", true);
+            refreshView.commit("alekk", response.data.message);
+            refreshView.commit("berhasilAlekk", true);
+            refreshView.commit("gagalAlekk", false);
+            refreshView.commit("success", response.data.success);
+          } else {
+            refreshView.commit("refreshData", true);
+            refreshView.commit("alekk", response.data.message);
+            refreshView.commit("gagalAlekk", true);
+            refreshView.commit("berhasilAlekk", false);
+            refreshView.commit("success", response.data.success);
+          }
+          this.closeModal();
+        })
+        .catch((error) => {
+          refreshView.commit("refreshData", true);
+          refreshView.commit("alekk", error.response.data.message);
+          refreshView.commit("gagalAlekk", true);
+          refreshView.commit("berhasilAlekk", false);
+          refreshView.commit("success", error.response.data.success);
+          console.log(error.response.status);
+          this.btnLoading = true;
+        });
+    },
+
+    closeModal() {
+      this.modalHapus = false;
+    },
+  },
+};
+</script>

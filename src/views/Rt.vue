@@ -125,9 +125,9 @@ export default {
     dleteIndex: "",
     headers: [
       {
-        text: "Nomor",
+        text: "No",
         value: "nomor",
-        width: "100px",
+        width: "50px",
         align: "center",
         sortable: false,
       },

@@ -32,6 +32,13 @@
           </v-list-item-icon>
           <v-list-item-title>RT/RW</v-list-item-title>
         </v-list-item>
+
+        <v-list-item :to="'/kk'">
+          <v-list-item-icon>
+            <v-icon>mdi-badge-account-outline</v-icon>
+          </v-list-item-icon>
+          <v-list-item-title>Kartu Keluarga</v-list-item-title>
+        </v-list-item>
       </v-list-item-group>
     </v-list>
   </v-navigation-drawer>
