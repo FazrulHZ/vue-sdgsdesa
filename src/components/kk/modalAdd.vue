@@ -279,24 +279,24 @@ export default {
           this.btnLoading = true;
           if (response.data.success) {
             refreshView.commit("refreshData", true);
-            refreshView.commit("alekk", response.data.message);
-            refreshView.commit("berhasilAlekk", true);
-            refreshView.commit("gagalAlekk", false);
+            refreshView.commit("alert", response.data.message);
+            refreshView.commit("berhasilAlert", true);
+            refreshView.commit("gagalAlert", false);
             refreshView.commit("success", response.data.success);
           } else {
             refreshView.commit("refreshData", true);
-            refreshView.commit("alekk", response.data.message);
-            refreshView.commit("gagalAlekk", true);
-            refreshView.commit("berhasilAlekk", false);
+            refreshView.commit("alert", response.data.message);
+            refreshView.commit("gagalAlert", true);
+            refreshView.commit("berhasilAlert", false);
             refreshView.commit("success", response.data.success);
           }
           this.closeModal();
         })
         .catch((error) => {
           refreshView.commit("refreshData", true);
-          refreshView.commit("alekk", error.response.data.message);
-          refreshView.commit("gagalAlekk", true);
-          refreshView.commit("berhasilAlekk", false);
+          refreshView.commit("alert", error.response.data.message);
+          refreshView.commit("gagalAlert", true);
+          refreshView.commit("berhasilAlert", false);
           refreshView.commit("success", error.response.data.success);
           console.log(error.response.status);
           this.btnLoading = true;

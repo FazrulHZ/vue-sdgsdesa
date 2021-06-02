@@ -18,7 +18,7 @@
         <div class="mx-7 mt-5">
           <v-row>
             <!-- Kabupaten / Kota -->
-            <v-col cols="12" md="4" class="mb-n8">
+            <v-col cols="12" md="3" class="mb-n8">
               <span class="subtitle-2">Kabupaten / Kota</span>
               <v-autocomplete
                 dense
@@ -33,7 +33,7 @@
             </v-col>
 
             <!-- Kecamatan -->
-            <v-col cols="12" md="4" class="mb-n8">
+            <v-col cols="12" md="3" class="mb-n8">
               <span class="subtitle-2">Kecamatan</span>
               <v-autocomplete
                 dense
@@ -48,7 +48,7 @@
             </v-col>
 
             <!-- Desa -->
-            <v-col cols="12" md="4" class="mb-n8">
+            <v-col cols="12" md="3" class="mb-n8">
               <span class="subtitle-2">Desa</span>
               <v-autocomplete
                 dense
@@ -61,40 +61,80 @@
                 v-model="editedItem.desa_id"
               ></v-autocomplete>
             </v-col>
+
+            <!-- RT/RW -->
+            <v-col cols="12" md="3" class="mb-n8">
+              <span class="subtitle-2">RT/RW</span>
+              <v-autocomplete
+                dense
+                flat
+                outlined
+                class="mt-2"
+                :items="refRt"
+                item-text="rt_nama"
+                item-value="rt_id"
+                v-model="editedItem.rt_id"
+              ></v-autocomplete>
+            </v-col>
           </v-row>
 
           <v-row>
-            <!-- Nama kk/RW -->
-            <v-col cols="12" md="3" class="mb-n8">
-              <span class="subtitle-2">Nama kk/RW</span>
+            <!-- Nomor Kartu Keluarga -->
+            <v-col cols="12" md="7" class="mb-n8">
+              <span class="subtitle-2">Nomor Kartu Keluarga</span>
               <v-text-field
                 dense
                 flat
                 outlined
-                placeholder="No. kk/RW"
                 class="mt-2"
-                :rules="kk_namaRules"
+                v-model="editedItem.kk_no"
+              ></v-text-field>
+            </v-col>
+          </v-row>
+
+          <v-row>
+            <!-- NIK Kepala Keluarga -->
+            <v-col cols="12" md="4" class="mb-n8">
+              <span class="subtitle-2">NIK Kepala Keluarga</span>
+              <v-text-field
+                dense
+                flat
+                outlined
+                class="mt-2"
+                v-model="editedItem.kk_nik"
+              ></v-text-field>
+            </v-col>
+
+            <!-- Nama Kepala Keluarga -->
+            <v-col cols="12" md="6" class="mb-n8">
+              <span class="subtitle-2">Nama Kepala Keluarga</span>
+              <v-text-field
+                dense
+                flat
+                outlined
+                class="mt-2"
                 v-model="editedItem.kk_nama"
               ></v-text-field>
             </v-col>
 
-            <!-- Nama Ketua kk/RW -->
-            <v-col cols="12" md="9" class="mb-n8">
-              <span class="subtitle-2">Nama Ketua kk/RW</span>
+            <!-- Telpon -->
+            <v-col cols="12" md="2" class="mb-n8">
+              <span class="subtitle-2">Telpon</span>
               <v-text-field
                 dense
                 flat
                 outlined
                 class="mt-2"
-                v-model="editedItem.kk_ketua"
+                append-icon="mdi-phone"
+                v-model="editedItem.kk_tlp"
               ></v-text-field>
             </v-col>
           </v-row>
 
           <v-row>
-            <!-- Alamat kk/RW -->
+            <!-- Alamat -->
             <v-col cols="12" class="mb-n8">
-              <span class="subtitle-2">Alamat kk/RW</span>
+              <span class="subtitle-2">Alamat</span>
               <v-textarea
                 dense
                 flat
@@ -106,41 +146,39 @@
           </v-row>
 
           <v-row>
-            <!-- kk/RW Telpon -->
+            <!-- Kepemilikan Lahan -->
             <v-col cols="12" md="2" class="mb-n8">
-              <span class="subtitle-2">kk/RW Telpon</span>
+              <span class="subtitle-2">Kepemilikan Lahan</span>
               <v-text-field
                 dense
                 flat
                 outlined
                 class="mt-2"
-                append-icon="mdi-phone"
-                v-model="editedItem.kk_tlp"
+                v-model="editedItem.kk_lahan"
               ></v-text-field>
             </v-col>
 
-            <!-- Topografi kk/RW -->
-            <v-col cols="12" md="8" class="mb-n8">
-              <span class="subtitle-2">Topografi kk/RW</span>
+            <!-- Luas Tanah -->
+            <v-col cols="12" md="2" class="mb-n8">
+              <span class="subtitle-2">Luas Tanah</span>
               <v-text-field
                 dense
                 flat
                 outlined
                 class="mt-2"
-                v-model="editedItem.kk_topografi"
+                v-model="editedItem.kk_tanah"
               ></v-text-field>
             </v-col>
 
-            <!-- Jumlah Warga kk/RW -->
+            <!-- Luas Lantai -->
             <v-col cols="12" md="2">
-              <span class="subtitle-2">Jumlah Warga kk/RW</span>
+              <span class="subtitle-2">Luas Lantai</span>
               <v-text-field
                 dense
                 flat
                 outlined
                 class="mt-2"
-                append-icon="mdi-account-group"
-                v-model="editedItem.kk_jumlah_warga"
+                v-model="editedItem.kk_lantai"
               ></v-text-field>
             </v-col>
           </v-row>
@@ -194,6 +232,12 @@ export default {
         return modalEdit.state.kk.kecamatan_id;
       },
     },
+
+    watchDesa: {
+      get() {
+        return modalEdit.state.kk.desa_id;
+      },
+    },
   },
 
   watch: {
@@ -208,6 +252,10 @@ export default {
     async watchKecamatan() {
       this.refDesa = await getRef.Desa(this.editedItem.kecamatan_id);
     },
+
+    async watchDesa() {
+      this.refRt = await getRef.RT(this.editedItem.desa_id);
+    },
   },
 
   data: () => ({
@@ -215,12 +263,7 @@ export default {
     refKabupaten: [],
     refKecamatan: [],
     refDesa: [],
-
-    kk_namaRules: [
-      (v) =>
-        v.split(" ").length <= 1 ||
-        "Harap jangan menggunakan spasi, contoh (001/001)",
-    ],
+    refRt: [],
   }),
 
   methods: {
@@ -229,15 +272,18 @@ export default {
 
       const data = {
         kk_id: this.editedItem.kk_id,
+        kk_no: this.editedItem.kk_no,
         kk_nama: this.editedItem.kk_nama,
-        kk_ketua: this.editedItem.kk_ketua,
+        kk_nik: this.editedItem.kk_nik,
         kk_alamat: this.editedItem.kk_alamat,
         kk_tlp: this.editedItem.kk_tlp,
-        kk_topografi: this.editedItem.kk_topografi,
-        kk_jumlah_warga: this.editedItem.kk_jumlah_warga,
+        kk_lahan: this.editedItem.kk_lahan,
+        kk_lantai: this.editedItem.kk_lantai,
+        kk_tanah: this.editedItem.kk_tanah,
         kabupaten_id: this.editedItem.kabupaten_id,
         kecamatan_id: this.editedItem.kecamatan_id,
         desa_id: this.editedItem.desa_id,
+        rt_id: this.editedItem.rt_id,
       };
 
       const url = process.env.VUE_APP_API_BASE + "kk";
@@ -247,26 +293,26 @@ export default {
           this.btnLoading = true;
           if (response.data.success) {
             refreshView.commit("refreshData", true);
-            refreshView.commit("alekk", response.data.message);
-            refreshView.commit("berhasilAlekk", true);
-            refreshView.commit("gagalAlekk", false);
+            refreshView.commit("alert", response.data.message);
+            refreshView.commit("berhasilAlert", true);
+            refreshView.commit("gagalAlert", false);
             refreshView.commit("success", response.data.success);
+            console.log(response.data.success);
           } else {
             refreshView.commit("refreshData", true);
-            refreshView.commit("alekk", response.data.message);
-            refreshView.commit("gagalAlekk", true);
-            refreshView.commit("berhasilAlekk", false);
+            refreshView.commit("alert", response.data.message);
+            refreshView.commit("gagalAlert", true);
+            refreshView.commit("berhasilAlert", false);
             refreshView.commit("success", response.data.success);
           }
           this.closeModal();
         })
         .catch((error) => {
           refreshView.commit("refreshData", true);
-          refreshView.commit("alekk", error.response.data.message);
-          refreshView.commit("gagalAlekk", true);
-          refreshView.commit("berhasilAlekk", false);
+          refreshView.commit("alert", error.response.data.message);
+          refreshView.commit("gagalAlert", true);
+          refreshView.commit("berhasilAlert", false);
           refreshView.commit("success", error.response.data.success);
-          console.log(error.response.status);
           this.btnLoading = true;
           this.closeModal();
         });
