@@ -6,21 +6,25 @@ Vue.use(Vuex)
 export default new Vuex.Store({
     state: {
         modalHapus: false,
-        rt: {
-            rt_id: "",
-            rt_nama: "",
-            rt_ketua: "",
-            rt_alamat: "",
-            rt_tlp: "",
-            rt_topografi: "",
-            rt_jumlah_warga: "",
+        kk: {
+            kk_id: "",
+            kk_no: "",
+            kk_nama: "",
+            kk_nik: "",
+            kk_alamat: "",
+            kk_tlp: "",
+            kk_lahan: "",
+            kk_lantai: "",
+            kk_tanah: "",
             kabupaten_id: "",
             kecamatan_id: "",
             desa_id: "",
+            rt_id: "",
             created_at: "",
             kabupaten_nama: "",
             kecamatan_nama: "",
-            desa_nama: ""
+            desa_nama: "",
+            rt_nama: ""
         }
     },
 
@@ -29,7 +33,7 @@ export default new Vuex.Store({
             state.modalHapus = value
         },
         viewModal(state, value) {
-            state.rt = value
+            state.kk = value
         }
     }
 })

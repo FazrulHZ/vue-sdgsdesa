@@ -13,7 +13,7 @@
         <div class="mx-7 mt-5">
           <v-row>
             <!-- Kabupaten / Kota -->
-            <v-col cols="12" md="4" class="mb-n8">
+            <v-col cols="12" md="3" class="mb-n8">
               <span class="subtitle-2">Kabupaten / Kota</span>
               <v-text-field
                 dense
@@ -26,7 +26,7 @@
             </v-col>
 
             <!-- Kecamatan -->
-            <v-col cols="12" md="4" class="mb-n8">
+            <v-col cols="12" md="3" class="mb-n8">
               <span class="subtitle-2">Kecamatan</span>
               <v-text-field
                 dense
@@ -39,7 +39,7 @@
             </v-col>
 
             <!-- Desa -->
-            <v-col cols="12" md="4" class="mb-n8">
+            <v-col cols="12" md="3" class="mb-n8">
               <span class="subtitle-2">Desa</span>
               <v-text-field
                 dense
@@ -50,41 +50,82 @@
                 readonly
               ></v-text-field>
             </v-col>
-          </v-row>
 
-          <v-row>
-            <!-- Nama kk/RW -->
+            <!-- RT/RW -->
             <v-col cols="12" md="3" class="mb-n8">
-              <span class="subtitle-2">Nama kk/RW</span>
+              <span class="subtitle-2">RT/RW</span>
               <v-text-field
                 dense
                 flat
                 outlined
-                placeholder="No. kk/RW"
+                class="mt-2"
+                v-model="viewItem.rt_nama"
+                readonly
+              ></v-text-field>
+            </v-col>
+          </v-row>
+
+          <v-row>
+            <!-- Nomor Kartu Keluarga -->
+            <v-col cols="12" md="7" class="mb-n8">
+              <span class="subtitle-2">Nomor Kartu Keluarga</span>
+              <v-text-field
+                dense
+                flat
+                outlined
+                class="mt-2"
+                v-model="viewItem.kk_no"
+                readonly
+              ></v-text-field>
+            </v-col>
+          </v-row>
+
+          <v-row>
+            <!-- NIK Kepala Keluarga -->
+            <v-col cols="12" md="4" class="mb-n8">
+              <span class="subtitle-2">NIK Kepala Keluarga</span>
+              <v-text-field
+                dense
+                flat
+                outlined
+                class="mt-2"
+                v-model="viewItem.kk_nik"
+                readonly
+              ></v-text-field>
+            </v-col>
+
+            <!-- Nama Kepala Keluarga -->
+            <v-col cols="12" md="5" class="mb-n8">
+              <span class="subtitle-2">Nama Kepala Keluarga</span>
+              <v-text-field
+                dense
+                flat
+                outlined
                 class="mt-2"
                 v-model="viewItem.kk_nama"
                 readonly
               ></v-text-field>
             </v-col>
 
-            <!-- Nama Ketua kk/RW -->
-            <v-col cols="12" md="9" class="mb-n8">
-              <span class="subtitle-2">Nama Ketua kk/RW</span>
+            <!-- Telpon -->
+            <v-col cols="12" md="3" class="mb-n8">
+              <span class="subtitle-2">Telpon</span>
               <v-text-field
                 dense
                 flat
                 outlined
                 class="mt-2"
-                v-model="viewItem.kk_ketua"
+                append-icon="mdi-phone"
+                v-model="viewItem.kk_tlp"
                 readonly
               ></v-text-field>
             </v-col>
           </v-row>
 
           <v-row>
-            <!-- Alamat kk/RW -->
+            <!-- Alamat -->
             <v-col cols="12" class="mb-n8">
-              <span class="subtitle-2">Alamat kk/RW</span>
+              <span class="subtitle-2">Alamat</span>
               <v-textarea
                 dense
                 flat
@@ -97,43 +138,41 @@
           </v-row>
 
           <v-row>
-            <!-- kk/RW Telpon -->
-            <v-col cols="12" md="4">
-              <span class="subtitle-2">kk/RW Telpon</span>
-              <v-text-field
-                dense
-                flat
-                outlined
-                class="mt-2"
-                append-icon="mdi-phone"
-                v-model="viewItem.kk_tlp"
-                readonly
-              ></v-text-field>
-            </v-col>
-
-            <!-- Topografi kk/RW -->
-            <v-col cols="12" md="5">
-              <span class="subtitle-2">Topografi kk/RW</span>
-              <v-text-field
-                dense
-                flat
-                outlined
-                class="mt-2"
-                v-model="viewItem.kk_topografi"
-                readonly
-              ></v-text-field>
-            </v-col>
-
-            <!-- Jumlah Warga kk/RW -->
+            <!-- Kepemilikan Lahan -->
             <v-col cols="12" md="3">
-              <span class="subtitle-2">Jumlah Warga kk/RW</span>
+              <span class="subtitle-2">Kepemilikan Lahan</span>
               <v-text-field
                 dense
                 flat
                 outlined
                 class="mt-2"
-                append-icon="mdi-account-group"
-                v-model="viewItem.kk_jumlah_warga"
+                v-model="viewItem.kk_lahan"
+                readonly
+              ></v-text-field>
+            </v-col>
+
+            <!-- Luas Tanah -->
+            <v-col cols="12" md="3">
+              <span class="subtitle-2">Luas Tanah</span>
+              <v-text-field
+                dense
+                flat
+                outlined
+                class="mt-2"
+                v-model="viewItem.kk_tanah"
+                readonly
+              ></v-text-field>
+            </v-col>
+
+            <!-- Luas Lantai -->
+            <v-col cols="12" md="3">
+              <span class="subtitle-2">Luas Lantai</span>
+              <v-text-field
+                dense
+                flat
+                outlined
+                class="mt-2"
+                v-model="viewItem.kk_lantai"
                 readonly
               ></v-text-field>
             </v-col>
