@@ -1,6 +1,6 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
-import Main from '../views/Main.vue'
+import Main from '../layout/Main.vue'
 
 Vue.use(VueRouter)
 
@@ -11,6 +11,11 @@ const routes = [
     component: Main,
     children:
       [
+        {
+          path: '/',
+          name: 'Home',
+          component: () => import(/* webpackChunkName: "Home" */ '../views/Home.vue')
+        },
         {
           path: '/desa',
           name: 'Desa',
