@@ -14,17 +14,22 @@ const routes = [
         {
           path: '/desa',
           name: 'Desa',
-          component: () => import(/* webpackChunkName: "desa" */ '../views/Desa.vue')
+          component: () => import(/* webpackChunkName: "Desa" */ '../views/Desa.vue')
         },
         {
           path: '/rt',
           name: 'Rt',
-          component: () => import(/* webpackChunkName: "rt" */ '../views/Rt.vue')
+          component: () => import(/* webpackChunkName: "TR/RW" */ '../views/Rt.vue')
         },
         {
           path: '/kk',
           name: 'Kk',
-          component: () => import(/* webpackChunkName: "Kk" */ '../views/Kk.vue')
+          component: () => import(/* webpackChunkName: "Kartu Keluarga" */ '../views/Kk.vue')
+        },
+        {
+          path: '/penduduk',
+          name: 'Penduduk',
+          component: () => import(/* webpackChunkName: "Penduduk" */ '../views/Penduduk.vue')
         }
       ]
   }

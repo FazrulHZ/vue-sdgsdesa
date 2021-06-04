@@ -35,9 +35,16 @@
 
         <v-list-item :to="'/kk'">
           <v-list-item-icon>
-            <v-icon>mdi-badge-account-outline</v-icon>
+            <v-icon>mdi-card-account-details-outline</v-icon>
           </v-list-item-icon>
           <v-list-item-title>Kartu Keluarga</v-list-item-title>
+        </v-list-item>
+
+        <v-list-item :to="'/penduduk'">
+          <v-list-item-icon>
+            <v-icon>mdi-clipboard-account-outline</v-icon>
+          </v-list-item-icon>
+          <v-list-item-title>Individu</v-list-item-title>
         </v-list-item>
       </v-list-item-group>
     </v-list>
