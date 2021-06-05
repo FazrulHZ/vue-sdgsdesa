@@ -1,10 +1,5 @@
 <template>
-  <v-dialog
-    v-model="modalEdit"
-    fullscreen
-    hide-overlay
-    transition="dialog-bottom-transition"
-  >
+  <v-dialog v-model="modalEdit" :width="CWidth">
     <v-card>
       <v-toolbar dark color="utama" dense flat>
         <v-toolbar-title>Edit Data RT/RW</v-toolbar-title>
@@ -64,83 +59,41 @@
           </v-row>
 
           <v-row>
-            <!-- Nama RT/RW -->
-            <v-col cols="12" md="3" class="mb-n8">
-              <span class="subtitle-2">Nama RT/RW</span>
-              <v-text-field
-                dense
-                flat
-                outlined
-                placeholder="No. RT/RW"
-                class="mt-2"
-                :rules="rt_namaRules"
-                v-model="editedItem.rt_nama"
-              ></v-text-field>
-            </v-col>
-
-            <!-- Nama Ketua RT/RW -->
-            <v-col cols="12" md="9" class="mb-n8">
-              <span class="subtitle-2">Nama Ketua RT/RW</span>
+            <!-- Nama LKD -->
+            <v-col cols="12" md="12" class="mb-n8">
+              <span class="subtitle-2">Nama LKD</span>
               <v-text-field
                 dense
                 flat
                 outlined
                 class="mt-2"
-                v-model="editedItem.rt_ketua"
+                v-model="editedItem.lkd_nama"
               ></v-text-field>
             </v-col>
           </v-row>
 
           <v-row>
-            <!-- Alamat RT/RW -->
-            <v-col cols="12" class="mb-n8">
-              <span class="subtitle-2">Alamat RT/RW</span>
-              <v-textarea
-                dense
-                flat
-                outlined
-                class="mt-2"
-                v-model="editedItem.rt_alamat"
-              ></v-textarea>
-            </v-col>
-          </v-row>
-
-          <v-row>
-            <!-- RT/RW Telpon -->
-            <v-col cols="12" md="2" class="mb-n8">
-              <span class="subtitle-2">RT/RW Telpon</span>
+            <!-- Jumlah Pengurus -->
+            <v-col cols="12" md="6" class="mb-n8">
+              <span class="subtitle-2">Jumlah Pengurus</span>
               <v-text-field
                 dense
                 flat
                 outlined
                 class="mt-2"
-                append-icon="mdi-phone"
-                v-model="editedItem.rt_tlp"
+                v-model="editedItem.lkd_pengurus"
               ></v-text-field>
             </v-col>
 
-            <!-- Topografi RT/RW -->
-            <v-col cols="12" md="8" class="mb-n8">
-              <span class="subtitle-2">Topografi RT/RW</span>
+            <!-- Jumlah Anggota -->
+            <v-col cols="12" md="6">
+              <span class="subtitle-2">Jumlah Anggota</span>
               <v-text-field
                 dense
                 flat
                 outlined
                 class="mt-2"
-                v-model="editedItem.rt_topografi"
-              ></v-text-field>
-            </v-col>
-
-            <!-- Jumlah Warga RT/RW -->
-            <v-col cols="12" md="2">
-              <span class="subtitle-2">Jumlah Warga RT/RW</span>
-              <v-text-field
-                dense
-                flat
-                outlined
-                class="mt-2"
-                append-icon="mdi-account-group"
-                v-model="editedItem.rt_jumlah_warga"
+                v-model="editedItem.lkd_anggota"
               ></v-text-field>
             </v-col>
           </v-row>
@@ -164,6 +117,15 @@ import refreshView from "@/store/lkd/viewLkd";
 import getRef from "@/helper/getRef.js";
 
 export default {
+  created() {
+    if (
+      this.$vuetify.breakpoint.name == "xs" ||
+      this.$vuetify.breakpoint.name == "sm"
+    ) {
+      this.CWidth = "100%";
+    }
+  },
+
   computed: {
     modalEdit: {
       get() {
@@ -212,15 +174,11 @@ export default {
 
   data: () => ({
     btnLoading: true,
+    CWidth: "60%",
+
     refKabupaten: [],
     refKecamatan: [],
     refDesa: [],
-
-    rt_namaRules: [
-      (v) =>
-        v.split(" ").length <= 1 ||
-        "Harap jangan menggunakan spasi, contoh (001/001)",
-    ],
   }),
 
   methods: {
@@ -228,13 +186,10 @@ export default {
       this.btnLoading = false;
 
       const data = {
-        rt_id: this.editedItem.rt_id,
-        rt_nama: this.editedItem.rt_nama,
-        rt_ketua: this.editedItem.rt_ketua,
-        rt_alamat: this.editedItem.rt_alamat,
-        rt_tlp: this.editedItem.rt_tlp,
-        rt_topografi: this.editedItem.rt_topografi,
-        rt_jumlah_warga: this.editedItem.rt_jumlah_warga,
+        lkd_id: this.editedItem.lkd_id,
+        lkd_nama: this.editedItem.lkd_nama,
+        lkd_pengurus: this.editedItem.lkd_pengurus,
+        lkd_anggota: this.editedItem.lkd_anggota,
         kabupaten_id: this.editedItem.kabupaten_id,
         kecamatan_id: this.editedItem.kecamatan_id,
         desa_id: this.editedItem.desa_id,
