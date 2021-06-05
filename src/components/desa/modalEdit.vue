@@ -270,9 +270,9 @@ export default {
   methods: {
     getIMG(value) {
       if (value) {
-        return "http://localhost:3000/upload/desaGambar/" + value;
+        return process.env.VUE_APP_API_BASE + "upload/desaGambar/" + value;
       } else {
-        return "http://localhost:3000/upload/default.svg";
+        return process.env.VUE_APP_API_BASE + "upload/default.svg";
       }
     },
 
@@ -288,7 +288,10 @@ export default {
       data.append("desa_twitter", this.editedItem.desa_twitter);
       data.append("desa_ig", this.editedItem.desa_ig);
       data.append("desa_yt", this.editedItem.desa_yt);
-      data.append("desa_status_pemerintahan", this.editedItem.desa_status_pemerintahan);
+      data.append(
+        "desa_status_pemerintahan",
+        this.editedItem.desa_status_pemerintahan
+      );
       data.append("kabupaten_id", this.editedItem.kabupaten_id);
       data.append("kecamatan_id", this.editedItem.kecamatan_id);
       data.append("desa_foto", this.desa_foto);

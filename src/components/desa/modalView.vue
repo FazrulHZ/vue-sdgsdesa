@@ -173,9 +173,9 @@ export default {
   methods: {
     getIMG(value) {
       if (value) {
-        return "http://localhost:3000/upload/desaGambar/" + value;
+        return process.env.VUE_APP_API_BASE + "upload/desaGambar/" + value;
       } else {
-        return "http://localhost:3000/upload/default.jpg";
+        return process.env.VUE_APP_API_BASE + "upload/default.jpg";
       }
     },
 
