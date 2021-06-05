@@ -46,6 +46,13 @@
           </v-list-item-icon>
           <v-list-item-title>Individu</v-list-item-title>
         </v-list-item>
+
+        <v-list-item :to="'/lkd'">
+          <v-list-item-icon>
+            <v-icon>mdi-office-building-outline</v-icon>
+          </v-list-item-icon>
+          <v-list-item-title>LKD</v-list-item-title>
+        </v-list-item>
       </v-list-item-group>
     </v-list>
   </v-navigation-drawer>

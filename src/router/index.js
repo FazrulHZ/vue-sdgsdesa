@@ -35,6 +35,11 @@ const routes = [
           path: '/penduduk',
           name: 'Penduduk',
           component: () => import(/* webpackChunkName: "Penduduk" */ '../views/Penduduk.vue')
+        },
+        {
+          path: '/lkd',
+          name: 'LKD',
+          component: () => import(/* webpackChunkName: "LKD" */ '../views/Lkd.vue')
         }
       ]
   }
