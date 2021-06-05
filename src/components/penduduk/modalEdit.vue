@@ -7,7 +7,7 @@
   >
     <v-card>
       <v-toolbar dark color="utama" dense flat>
-        <v-toolbar-title>Edit Data Kartu Keluarga</v-toolbar-title>
+        <v-toolbar-title>Edit Data Penduduk</v-toolbar-title>
         <v-spacer></v-spacer>
         <v-btn icon dark @click="closeModal()">
           <v-icon>mdi-close</v-icon>

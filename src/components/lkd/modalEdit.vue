@@ -2,7 +2,7 @@
   <v-dialog v-model="modalEdit" :width="CWidth">
     <v-card>
       <v-toolbar dark color="utama" dense flat>
-        <v-toolbar-title>Edit Data RT/RW</v-toolbar-title>
+        <v-toolbar-title>Edit Lembaga Kemasyaratan Desa</v-toolbar-title>
         <v-spacer></v-spacer>
         <v-btn icon dark @click="closeModal()">
           <v-icon>mdi-close</v-icon>

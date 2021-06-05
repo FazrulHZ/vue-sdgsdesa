@@ -25,7 +25,7 @@
 
     <v-card>
       <v-toolbar dark color="utama" dense flat>
-        <v-toolbar-title>Tambah Kartu Keluarga</v-toolbar-title>
+        <v-toolbar-title>Tambah Penduduk</v-toolbar-title>
         <v-spacer></v-spacer>
         <v-btn icon dark @click="ModalAdd = false">
           <v-icon>mdi-close</v-icon>

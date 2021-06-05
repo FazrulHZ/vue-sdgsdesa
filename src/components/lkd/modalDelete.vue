@@ -2,7 +2,7 @@
   <v-dialog v-model="modalHapus" :width="CWidth">
     <v-card>
       <v-toolbar dark color="utama" dense flat>
-        <v-toolbar-title class="subtitle-1">Hapus Data RT/RW</v-toolbar-title>
+        <v-toolbar-title class="subtitle-1">Hapus Lembaga Kemasyaratan Desa</v-toolbar-title>
         <v-spacer></v-spacer>
         <v-btn icon dark @click="closeModal()">
           <v-icon>mdi-close</v-icon>
@@ -58,7 +58,7 @@ export default {
     },
     hapusItem: {
       get() {
-        return modalHapus.state.rt;
+        return modalHapus.state.lkd;
       },
       set(value) {
         console.log(value);
@@ -84,7 +84,7 @@ export default {
     async hapus() {
       this.btnLoading = false;
 
-      const url = process.env.VUE_APP_API_BASE + "rt/" + this.hapusItem.rt_id;
+      const url = process.env.VUE_APP_API_BASE + "lkd/" + this.hapusItem.lkd_id;
       this.http
         .delete(url)
         .then((response) => {

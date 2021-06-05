@@ -2,7 +2,7 @@
   <v-dialog v-model="modalView" :width="CWidth">
     <v-card>
       <v-toolbar dark color="utama" dense flat>
-        <v-toolbar-title>Detail Kartu Keluarga</v-toolbar-title>
+        <v-toolbar-title>Detail Penduduk</v-toolbar-title>
         <v-spacer></v-spacer>
         <v-btn icon dark @click="closeModal()">
           <v-icon>mdi-close</v-icon>
