@@ -3,7 +3,7 @@
     <v-card>
       <v-toolbar dark color="utama" dense flat>
         <v-toolbar-title class="subtitle-1"
-          >Hapus Data Kartu Keluarga</v-toolbar-title
+          >Hapus Data Penduduk</v-toolbar-title
         >
         <v-spacer></v-spacer>
         <v-btn icon dark @click="closeModal()">
