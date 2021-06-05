@@ -53,87 +53,43 @@
           </v-row>
 
           <v-row>
-            <!-- Nama RT/RW -->
-            <v-col cols="12" md="3" class="mb-n8">
-              <span class="subtitle-2">Nama RT/RW</span>
-              <v-text-field
-                dense
-                flat
-                outlined
-                placeholder="No. RT/RW"
-                class="mt-2"
-                v-model="viewItem.rt_nama"
-                readonly
-              ></v-text-field>
-            </v-col>
-
-            <!-- Nama Ketua RT/RW -->
-            <v-col cols="12" md="9" class="mb-n8">
-              <span class="subtitle-2">Nama Ketua RT/RW</span>
+            <!-- Nama LKD -->
+            <v-col cols="12" md="12" class="mb-n8">
+              <span class="subtitle-2">Nama LKD</span>
               <v-text-field
                 dense
                 flat
                 outlined
                 class="mt-2"
-                v-model="viewItem.rt_ketua"
+                v-model="viewItem.lkd_nama"
                 readonly
               ></v-text-field>
             </v-col>
           </v-row>
 
           <v-row>
-            <!-- Alamat RT/RW -->
-            <v-col cols="12" class="mb-n8">
-              <span class="subtitle-2">Alamat RT/RW</span>
-              <v-textarea
-                dense
-                flat
-                outlined
-                class="mt-2"
-                v-model="viewItem.rt_alamat"
-                readonly
-              ></v-textarea>
-            </v-col>
-          </v-row>
-
-          <v-row>
-            <!-- RT/RW Telpon -->
-            <v-col cols="12" md="4">
-              <span class="subtitle-2">RT/RW Telpon</span>
+            <!-- Jumlah Pengurus -->
+            <v-col cols="12" md="6">
+              <span class="subtitle-2">Jumlah Pengurus</span>
               <v-text-field
                 dense
                 flat
                 outlined
                 class="mt-2"
-                append-icon="mdi-phone"
-                v-model="viewItem.rt_tlp"
+                v-model="viewItem.lkd_pengurus"
                 readonly
               ></v-text-field>
             </v-col>
 
-            <!-- Topografi RT/RW -->
-            <v-col cols="12" md="5">
-              <span class="subtitle-2">Topografi RT/RW</span>
+            <!-- Jumlah Anggota -->
+            <v-col cols="12" md="6">
+              <span class="subtitle-2">Jumlah Anggota</span>
               <v-text-field
                 dense
                 flat
                 outlined
                 class="mt-2"
-                v-model="viewItem.rt_topografi"
-                readonly
-              ></v-text-field>
-            </v-col>
-
-            <!-- Jumlah Warga RT/RW -->
-            <v-col cols="12" md="3">
-              <span class="subtitle-2">Jumlah Warga RT/RW</span>
-              <v-text-field
-                dense
-                flat
-                outlined
-                class="mt-2"
-                append-icon="mdi-account-group"
-                v-model="viewItem.rt_jumlah_warga"
+                v-model="viewItem.lkd_anggota"
                 readonly
               ></v-text-field>
             </v-col>
