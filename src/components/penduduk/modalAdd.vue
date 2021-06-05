@@ -226,7 +226,7 @@
           </v-row>
 
           <v-row>
-            <!-- Jenis Kelamin -->
+            <!-- Suku -->
             <v-col cols="12" md="6" class="mb-n8">
               <span class="subtitle-2">Suku</span>
               <v-text-field

@@ -6,16 +6,18 @@ Vue.use(Vuex)
 export default new Vuex.Store({
     state: {
         modalEdit: false,
-        kk: {
-            kk_id: "",
-            kk_no: "",
-            kk_nama: "",
-            kk_nik: "",
-            kk_alamat: "",
-            kk_tlp: "",
-            kk_lahan: "",
-            kk_lantai: "",
-            kk_tanah: "",
+        penduduk: {
+            penduduk_id: "",
+            penduduk_nik: "",
+            penduduk_nama: "",
+            penduduk_kelamin: "",
+            penduduk_tempatlahir: "",
+            penduduk_tgllahir: "",
+            penduduk_umur: "",
+            penduduk_kawin: "",
+            penduduk_agama: "",
+            penduduk_suku: "",
+            penduduk_wn: "",
             kabupaten_id: "",
             kecamatan_id: "",
             desa_id: "",
@@ -33,7 +35,7 @@ export default new Vuex.Store({
             state.modalEdit = value
         },
         viewModal(state, value) {
-            state.kk = value
+            state.penduduk = value
         }
     }
 })

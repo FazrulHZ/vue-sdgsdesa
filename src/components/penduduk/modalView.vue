@@ -66,24 +66,9 @@
           </v-row>
 
           <v-row>
-            <!-- Nomor Kartu Keluarga -->
-            <v-col cols="12" md="7" class="mb-n8">
-              <span class="subtitle-2">Nomor Kartu Keluarga</span>
-              <v-text-field
-                dense
-                flat
-                outlined
-                class="mt-2"
-                v-model="viewItem.penduduk_no"
-                readonly
-              ></v-text-field>
-            </v-col>
-          </v-row>
-
-          <v-row>
-            <!-- NIK Kepala Keluarga -->
+            <!-- Nomor Induk KTP -->
             <v-col cols="12" md="4" class="mb-n8">
-              <span class="subtitle-2">NIK Kepala Keluarga</span>
+              <span class="subtitle-2">Nomor Induk KTP</span>
               <v-text-field
                 dense
                 flat
@@ -94,9 +79,9 @@
               ></v-text-field>
             </v-col>
 
-            <!-- Nama Kepala Keluarga -->
-            <v-col cols="12" md="5" class="mb-n8">
-              <span class="subtitle-2">Nama Kepala Keluarga</span>
+            <!-- Nama Lengkap -->
+            <v-col cols="12" md="6" class="mb-n8">
+              <span class="subtitle-2">Nama Lengkap</span>
               <v-text-field
                 dense
                 flat
@@ -107,74 +92,125 @@
               ></v-text-field>
             </v-col>
 
-            <!-- Telpon -->
+            <!-- Umur -->
+            <v-col cols="12" md="2" class="mb-n8">
+              <span class="subtitle-2">Umur</span>
+              <v-text-field
+                dense
+                flat
+                outlined
+                class="mt-2"
+                v-model="viewItem.penduduk_umur"
+                readonly
+              ></v-text-field>
+            </v-col>
+          </v-row>
+
+          <v-row>
+            <!-- Tempat Lahir -->
             <v-col cols="12" md="3" class="mb-n8">
-              <span class="subtitle-2">Telpon</span>
+              <span class="subtitle-2">Tempat Lahir</span>
               <v-text-field
                 dense
                 flat
                 outlined
                 class="mt-2"
-                append-icon="mdi-phone"
-                v-model="viewItem.penduduk_tlp"
+                v-model="viewItem.penduduk_tempatlahir"
                 readonly
               ></v-text-field>
+            </v-col>
+
+            <!-- Tanggal Lahir -->
+            <v-col cols="12" md="3" class="mb-n8">
+              <span class="subtitle-2">Tanggal Lahir</span>
+              <v-text-field
+                dense
+                flat
+                outlined
+                class="mt-2"
+                append-icon="mdi-calendar"
+                v-model="viewItem.penduduk_tgllahir"
+                readonly
+              ></v-text-field>
+            </v-col>
+
+            <!-- Jenis Kelamin -->
+            <v-col cols="12" md="3" class="mb-n8">
+              <span class="subtitle-2">Jenis Kelamin</span>
+              <v-select
+                dense
+                flat
+                outlined
+                class="mt-2"
+                :items="refKelamin"
+                item-value="id"
+                item-text="nama"
+                v-model="viewItem.penduduk_kelamin"
+                readonly
+              ></v-select>
+            </v-col>
+
+            <!-- Satatus -->
+            <v-col cols="12" md="3" class="mb-n8">
+              <span class="subtitle-2">Status</span>
+              <v-select
+                dense
+                flat
+                outlined
+                class="mt-2"
+                :items="refStatus"
+                item-value="id"
+                item-text="nama"
+                v-model="viewItem.penduduk_kawin"
+                readonly
+              ></v-select>
             </v-col>
           </v-row>
 
           <v-row>
-            <!-- Alamat -->
-            <v-col cols="12" class="mb-n8">
-              <span class="subtitle-2">Alamat</span>
-              <v-textarea
-                dense
-                flat
-                outlined
-                class="mt-2"
-                v-model="viewItem.penduduk_alamat"
-                readonly
-              ></v-textarea>
-            </v-col>
-          </v-row>
-
-          <v-row>
-            <!-- Kepemilikan Lahan -->
-            <v-col cols="12" md="3">
-              <span class="subtitle-2">Kepemilikan Lahan</span>
+            <!-- Suku -->
+            <v-col cols="12" md="4">
+              <span class="subtitle-2">Suku</span>
               <v-text-field
                 dense
                 flat
                 outlined
                 class="mt-2"
-                v-model="viewItem.penduduk_lahan"
+                v-model="viewItem.penduduk_suku"
                 readonly
               ></v-text-field>
             </v-col>
 
-            <!-- Luas Tanah -->
+            <!-- Agama -->
             <v-col cols="12" md="3">
-              <span class="subtitle-2">Luas Tanah</span>
-              <v-text-field
+              <span class="subtitle-2">Agama</span>
+              <v-select
                 dense
                 flat
                 outlined
                 class="mt-2"
-                v-model="viewItem.penduduk_tanah"
+                :items="refAgama"
+                item-value="id"
+                item-text="nama"
+                v-model="viewItem.penduduk_agama"
                 readonly
-              ></v-text-field>
+              ></v-select>
             </v-col>
 
-            <!-- Luas Lantai -->
-            <v-col cols="12" md="3">
-              <span class="subtitle-2">Luas Lantai</span>
-              <v-text-field
+            <!-- Warga Negara -->
+            <v-col cols="12" md="5">
+              <span class="subtitle-2">Warga Negara</span>
+              <v-select
                 dense
                 flat
                 outlined
                 class="mt-2"
-                v-model="viewItem.penduduk_lantai"
+                :items="refWN"
+                item-value="id"
+                item-text="nama"
+                v-model="viewItem.penduduk_wn"
                 readonly
-              ></v-text-field>
+              ></v-select>
             </v-col>
           </v-row>
         </div>
@@ -185,6 +221,7 @@
 
 <script>
 import modalView from "@/store/penduduk/modalView";
+import getRef from "@/helper/getRef.js";
 
 export default {
   computed: {
@@ -196,6 +233,7 @@ export default {
         modalView.commit("toggleModal", value);
       },
     },
+
     viewItem: {
       get() {
         return modalView.state.penduduk;
@@ -203,6 +241,21 @@ export default {
       set(value) {
         console.log(value);
       },
+    },
+  },
+
+  watch: {
+    async modalView() {
+      this.refKelamin = await getRef.Jenkel();
+      this.refStatus = await getRef.Status();
+      this.refAgama = await getRef.Agama();
+      this.refWN = await getRef.WN();
+    },
+
+    viewItem() {
+      this.viewItem.penduduk_tgllahir = this.tglFormat(
+        this.viewItem.penduduk_tgllahir
+      );
     },
   },
 
@@ -216,12 +269,31 @@ export default {
   },
 
   data: () => ({
+    tglLahirPicker: false,
+
     CWidth: "60%",
+    refKelamin: [],
+    refStatus: [],
+    refAgama: [],
+    refWN: [],
   }),
 
   methods: {
     closeModal() {
       this.modalView = false;
+    },
+
+    tglFormat(tgl) {
+      const date = new Date(tgl);
+      const dateTimeFormat = new Intl.DateTimeFormat("id", {
+        year: "numeric",
+        month: "2-digit",
+        day: "2-digit",
+      });
+      const formatted = dateTimeFormat.formatToParts(date);
+      return (
+        formatted[4].value + "-" + formatted[2].value + "-" + formatted[0].value
+      );
     },
   },
 };
