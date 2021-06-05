@@ -33,7 +33,7 @@
               </div>
               <div>
                 <div>
-                  <h1>112</h1>
+                  <h1>{{ jumlahDesa }}</h1>
                 </div>
                 <div>
                   Desa
@@ -52,7 +52,7 @@
               </div>
               <div>
                 <div>
-                  <h1>10</h1>
+                  <h1>{{ jumlahRT }}</h1>
                 </div>
                 <div>
                   RT / RW
@@ -71,7 +71,7 @@
               </div>
               <div>
                 <div>
-                  <h1>11</h1>
+                  <h1>{{ jumlahKK }}</h1>
                 </div>
                 <div>
                   Keluarga
@@ -90,7 +90,7 @@
               </div>
               <div>
                 <div>
-                  <h1>12</h1>
+                  <h1>{{ jumlahPenduduk }}</h1>
                 </div>
                 <div>
                   Penduduk
@@ -109,6 +109,64 @@ export default {
   data: () => ({
     iconColor: "utama",
     drawer: null,
+
+    jumlahDesa: 0,
+    jumlahRT: 0,
+    jumlahKK: 0,
+    jumlahPenduduk: 0,
   }),
+
+  mounted() {
+    this.getDesa();
+    this.getRT();
+    this.getKK();
+    this.getPenduduk();
+  },
+
+  methods: {
+    getDesa() {
+      this.http
+        .get(process.env.VUE_APP_API_BASE + "desainfo/")
+        .then((res) => {
+          this.jumlahDesa = res.data.count;
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    },
+
+    getRT() {
+      this.http
+        .get(process.env.VUE_APP_API_BASE + "rt/")
+        .then((res) => {
+          this.jumlahRT = res.data.count;
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    },
+
+    getKK() {
+      this.http
+        .get(process.env.VUE_APP_API_BASE + "kk/")
+        .then((res) => {
+          this.jumlahKK = res.data.count;
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    },
+
+    getPenduduk() {
+      this.http
+        .get(process.env.VUE_APP_API_BASE + "penduduk/")
+        .then((res) => {
+          this.jumlahPenduduk = res.data.count;
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    },
+  },
 };
 </script>
