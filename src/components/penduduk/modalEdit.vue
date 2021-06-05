@@ -79,23 +79,9 @@
           </v-row>
 
           <v-row>
-            <!-- Nomor Kartu Keluarga -->
-            <v-col cols="12" md="7" class="mb-n8">
-              <span class="subtitle-2">Nomor Kartu Keluarga</span>
-              <v-text-field
-                dense
-                flat
-                outlined
-                class="mt-2"
-                v-model="editedItem.penduduk_no"
-              ></v-text-field>
-            </v-col>
-          </v-row>
-
-          <v-row>
-            <!-- NIK Kepala Keluarga -->
+            <!-- Nomor Induk KTP -->
             <v-col cols="12" md="4" class="mb-n8">
-              <span class="subtitle-2">NIK Kepala Keluarga</span>
+              <span class="subtitle-2">Nomor Induk KTP</span>
               <v-text-field
                 dense
                 flat
@@ -105,9 +91,9 @@
               ></v-text-field>
             </v-col>
 
-            <!-- Nama Kepala Keluarga -->
+            <!-- Nama Lengkap -->
             <v-col cols="12" md="6" class="mb-n8">
-              <span class="subtitle-2">Nama Kepala Keluarga</span>
+              <span class="subtitle-2">Nama Lengkap</span>
               <v-text-field
                 dense
                 flat
@@ -117,69 +103,151 @@
               ></v-text-field>
             </v-col>
 
-            <!-- Telpon -->
+            <!-- Umur -->
             <v-col cols="12" md="2" class="mb-n8">
-              <span class="subtitle-2">Telpon</span>
+              <span class="subtitle-2">Umur</span>
               <v-text-field
                 dense
                 flat
                 outlined
                 class="mt-2"
-                append-icon="mdi-phone"
-                v-model="editedItem.penduduk_tlp"
+                v-model="editedItem.penduduk_umur"
               ></v-text-field>
             </v-col>
           </v-row>
 
           <v-row>
-            <!-- Alamat -->
-            <v-col cols="12" class="mb-n8">
-              <span class="subtitle-2">Alamat</span>
-              <v-textarea
+            <!-- Tempat Lahir -->
+            <v-col cols="12" md="3" class="mb-n8">
+              <span class="subtitle-2">Tempat Lahir</span>
+              <v-text-field
                 dense
                 flat
                 outlined
                 class="mt-2"
-                v-model="editedItem.penduduk_alamat"
-              ></v-textarea>
+                v-model="editedItem.penduduk_tempatlahir"
+              ></v-text-field>
+            </v-col>
+
+            <!-- Tanggal Lahir -->
+            <v-col cols="12" md="3" class="mb-n8">
+              <span class="subtitle-2">Tanggal Lahir</span>
+              <v-menu
+                ref="tglLahirPicker"
+                v-model="tglLahirPicker"
+                :close-on-content-click="false"
+                :return-value.sync="editedItem.penduduk_tgllahir"
+                transition="scale-transition"
+                offset-y
+                min-width="auto"
+              >
+                <template v-slot:activator="{ on, attrs }">
+                  <v-text-field
+                    dense
+                    flat
+                    outlined
+                    class="mt-2"
+                    v-model="editedItem.penduduk_tgllahir"
+                    append-icon="mdi-calendar"
+                    readonly
+                    v-bind="attrs"
+                    v-on="on"
+                  ></v-text-field>
+                </template>
+                <v-date-picker
+                  v-model="editedItem.penduduk_tgllahir"
+                  no-title
+                  scrollable
+                >
+                  <v-spacer></v-spacer>
+                  <v-btn text color="primary" @click="tglLahirPicker = false">
+                    Cancel
+                  </v-btn>
+                  <v-btn
+                    text
+                    color="primary"
+                    @click="
+                      $refs.tglLahirPicker.save(editedItem.penduduk_tgllahir)
+                    "
+                  >
+                    OK
+                  </v-btn>
+                </v-date-picker>
+              </v-menu>
+            </v-col>
+
+            <!-- Jenis Kelamin -->
+            <v-col cols="12" md="3" class="mb-n8">
+              <span class="subtitle-2">Jenis Kelamin</span>
+              <v-select
+                dense
+                flat
+                outlined
+                class="mt-2"
+                :items="refKelamin"
+                item-value="id"
+                item-text="nama"
+                v-model="editedItem.penduduk_kelamin"
+              ></v-select>
+            </v-col>
+
+            <!-- Satatus -->
+            <v-col cols="12" md="3" class="mb-n8">
+              <span class="subtitle-2">Status</span>
+              <v-select
+                dense
+                flat
+                outlined
+                class="mt-2"
+                :items="refStatus"
+                item-value="id"
+                item-text="nama"
+                v-model="editedItem.penduduk_kawin"
+              ></v-select>
             </v-col>
           </v-row>
 
           <v-row>
-            <!-- Kepemilikan Lahan -->
-            <v-col cols="12" md="2" class="mb-n8">
-              <span class="subtitle-2">Kepemilikan Lahan</span>
+            <!-- Suku -->
+            <v-col cols="12" md="6" class="mb-n8">
+              <span class="subtitle-2">Suku</span>
               <v-text-field
                 dense
                 flat
                 outlined
                 class="mt-2"
-                v-model="editedItem.penduduk_lahan"
+                v-model="editedItem.penduduk_suku"
               ></v-text-field>
             </v-col>
 
-            <!-- Luas Tanah -->
-            <v-col cols="12" md="2" class="mb-n8">
-              <span class="subtitle-2">Luas Tanah</span>
-              <v-text-field
+            <!-- Agama -->
+            <v-col cols="12" md="3" class="mb-n8">
+              <span class="subtitle-2">Agama</span>
+              <v-select
                 dense
                 flat
                 outlined
                 class="mt-2"
-                v-model="editedItem.penduduk_tanah"
-              ></v-text-field>
+                :items="refAgama"
+                item-value="id"
+                item-text="nama"
+                v-model="editedItem.penduduk_agama"
+              ></v-select>
             </v-col>
 
-            <!-- Luas Lantai -->
-            <v-col cols="12" md="2">
-              <span class="subtitle-2">Luas Lantai</span>
-              <v-text-field
+            <!-- Warga Negara -->
+            <v-col cols="12" md="3">
+              <span class="subtitle-2">Warga Negara</span>
+              <v-select
                 dense
                 flat
                 outlined
                 class="mt-2"
-                v-model="editedItem.penduduk_lantai"
-              ></v-text-field>
+                :items="refWN"
+                item-value="id"
+                item-text="nama"
+                v-model="editedItem.penduduk_wn"
+              ></v-select>
             </v-col>
           </v-row>
 
@@ -241,8 +309,18 @@ export default {
   },
 
   watch: {
+    editedItem() {
+      this.editedItem.penduduk_tgllahir = this.tglFormat(
+        this.editedItem.penduduk_tgllahir
+      );
+    },
+
     async modalEdit() {
       this.refKabupaten = await getRef.Kabupaten();
+      this.refKelamin = await getRef.Jenkel();
+      this.refStatus = await getRef.Status();
+      this.refAgama = await getRef.Agama();
+      this.refWN = await getRef.WN();
     },
 
     async watchKabupaten() {
@@ -260,10 +338,16 @@ export default {
 
   data: () => ({
     btnLoading: true,
+    tglLahirPicker: false,
+
     refKabupaten: [],
     refKecamatan: [],
     refDesa: [],
     refRt: [],
+    refKelamin: [],
+    refStatus: [],
+    refAgama: [],
+    refWN: [],
   }),
 
   methods: {
@@ -272,14 +356,16 @@ export default {
 
       const data = {
         penduduk_id: this.editedItem.penduduk_id,
-        penduduk_no: this.editedItem.penduduk_no,
-        penduduk_nama: this.editedItem.penduduk_nama,
         penduduk_nik: this.editedItem.penduduk_nik,
-        penduduk_alamat: this.editedItem.penduduk_alamat,
-        penduduk_tlp: this.editedItem.penduduk_tlp,
-        penduduk_lahan: this.editedItem.penduduk_lahan,
-        penduduk_lantai: this.editedItem.penduduk_lantai,
-        penduduk_tanah: this.editedItem.penduduk_tanah,
+        penduduk_nama: this.editedItem.penduduk_nama,
+        penduduk_kelamin: this.editedItem.penduduk_kelamin,
+        penduduk_tempatlahir: this.editedItem.penduduk_tempatlahir,
+        penduduk_tgllahir: this.editedItem.penduduk_tgllahir,
+        penduduk_umur: this.editedItem.penduduk_umur,
+        penduduk_kawin: this.editedItem.penduduk_kawin,
+        penduduk_agama: this.editedItem.penduduk_agama,
+        penduduk_suku: this.editedItem.penduduk_suku,
+        penduduk_wn: this.editedItem.penduduk_wn,
         kabupaten_id: this.editedItem.kabupaten_id,
         kecamatan_id: this.editedItem.kecamatan_id,
         desa_id: this.editedItem.desa_id,
@@ -320,6 +406,19 @@ export default {
 
     closeModal() {
       this.modalEdit = false;
+    },
+
+    tglFormat(tgl) {
+      const date = new Date(tgl);
+      const dateTimeFormat = new Intl.DateTimeFormat("id", {
+        year: "numeric",
+        month: "2-digit",
+        day: "2-digit",
+      });
+      const formatted = dateTimeFormat.formatToParts(date);
+      return (
+        formatted[4].value + "-" + formatted[2].value + "-" + formatted[0].value
+      );
     },
   },
 };
