@@ -298,7 +298,11 @@ export default {
 
       const url = process.env.VUE_APP_API_BASE + "desainfo";
       this.http
-        .put(url, data)
+        .put(url, data, {
+          headers: {
+            "Content-Type": "multipart/form-data",
+          },
+        })
         .then((response) => {
           this.btnLoading = true;
           if (response.data.success) {
