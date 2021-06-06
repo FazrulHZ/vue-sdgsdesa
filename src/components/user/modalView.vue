@@ -127,7 +127,7 @@ export default {
       if (value) {
         return process.env.VUE_APP_API_BASE + "upload/userGambar/" + value;
       } else {
-        return process.env.VUE_APP_API_BASE + "upload/default.jpg";
+        return process.env.VUE_APP_API_BASE + "upload/userDefault.png";
       }
     },
 

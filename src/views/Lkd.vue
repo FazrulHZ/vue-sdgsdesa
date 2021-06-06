@@ -34,9 +34,9 @@
         {{
           lkds
             .map(function(x) {
-              return x.org_id;
+              return x.lkd_id;
             })
-            .indexOf(item.org_id) + 1
+            .indexOf(item.lkd_id) + 1
         }}
       </template>
       <template v-slot:[`item.action`]="{ item }">

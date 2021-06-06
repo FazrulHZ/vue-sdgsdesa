@@ -194,10 +194,10 @@ export default {
       const data = new FormData();
       data.append("user_id", this.editedItem.user_id);
       data.append("user_ktp", this.editedItem.user_ktp);
-      data.append("user_password", this.editedItem.user_password);
+      data.append("user_password", this.user_password);
       data.append("user_nama", this.editedItem.user_nama);
       data.append("user_tlp", this.editedItem.user_tlp);
-      data.append("user_alamat", this.editedItem.user_twitter);
+      data.append("user_alamat", this.editedItem.user_alamat);
       data.append("user_foto", this.user_foto);
 
       let config = {

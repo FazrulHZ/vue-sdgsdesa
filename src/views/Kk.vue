@@ -34,9 +34,9 @@
         {{
           rts
             .map(function(x) {
-              return x.org_id;
+              return x.kk_id;
             })
-            .indexOf(item.org_id) + 1
+            .indexOf(item.kk_id) + 1
         }}
       </template>
       <template v-slot:[`item.action`]="{ item }">
