@@ -14,47 +14,31 @@
           <v-row>
             <!-- Foto user -->
             <v-col cols="12" class="text-center">
-              <v-img
-                :src="getIMG(viewItem.user_foto)"
-                max-height="200"
-                class="mx-auto"
-              ></v-img>
-              <span class="subtitle-2">Foto user</span>
+              <v-avatar size="200">
+                <v-img
+                  :src="getIMG(viewItem.user_foto)"
+                ></v-img>
+              </v-avatar>
             </v-col>
           </v-row>
 
           <v-row>
-            <!-- Kabupaten / Kota -->
+            <!-- NIK User -->
             <v-col cols="12" md="4" class="mb-n8">
-              <span class="subtitle-2">Kabupaten / Kota</span>
+              <span class="subtitle-2">NIK User</span>
               <v-text-field
                 dense
                 flat
                 outlined
                 class="mt-2"
-                v-model="viewItem.kabupaten_nama"
+                v-model="viewItem.user_ktp"
                 readonly
               ></v-text-field>
             </v-col>
 
-            <!-- Kecamatan -->
-            <v-col cols="12" md="5" class="mb-n8">
-              <span class="subtitle-2">Kecamatan</span>
-              <v-text-field
-                dense
-                flat
-                outlined
-                class="mt-2"
-                v-model="viewItem.kecamatan_nama"
-                readonly
-              ></v-text-field>
-            </v-col>
-          </v-row>
-
-          <v-row>
-            <!-- Nama user -->
-            <v-col cols="12" class="mb-n8">
-              <span class="subtitle-2">Nama user</span>
+            <!-- Nama User -->
+            <v-col cols="12" md="8" class="mb-n8">
+              <span class="subtitle-2">Nama User</span>
               <v-text-field
                 dense
                 flat
@@ -67,65 +51,33 @@
           </v-row>
 
           <v-row>
-            <!-- Email user -->
-            <v-col cols="12" md="4" class="mb-n8">
-              <span class="subtitle-2">Email user</span>
-              <v-text-field
-                dense
-                flat
-                outlined
-                class="mt-2"
-                v-model="viewItem.user_email"
-                readonly
-                append-icon="mdi-email"
-              ></v-text-field>
-            </v-col>
-
-            <!-- Website user -->
-            <v-col cols="12" md="8" class="mb-n8">
-              <span class="subtitle-2">Website user</span>
-              <v-text-field
-                dense
-                flat
-                outlined
-                class="mt-2"
-                v-model="viewItem.user_web"
-                readonly
-                append-icon="mdi-web"
-              ></v-text-field>
-            </v-col>
-          </v-row>
-
-          <v-row>
-            <!-- Status Pemerintahan -->
+            <!-- Alamat -->
             <v-col cols="12" class="mb-n8">
-              <span class="subtitle-2">Status Pemerintahan</span>
+              <span class="subtitle-2">Alamat</span>
+              <v-textarea
+                dense
+                flat
+                outlined
+                class="mt-2"
+                v-model="viewItem.user_alamat"
+                readonly
+              ></v-textarea>
+            </v-col>
+          </v-row>
+
+          <v-row>
+            <!-- Nomor Telpon -->
+            <v-col cols="12" md="3">
+              <span class="subtitle-2">Nomor Telpon</span>
               <v-text-field
                 dense
                 flat
                 outlined
                 class="mt-2"
-                v-model="viewItem.user_status_pemerintahan"
+                append-icon="mdi-phone"
+                v-model="viewItem.user_tlp"
                 readonly
               ></v-text-field>
-            </v-col>
-          </v-row>
-
-          <v-row>
-            <!-- Sosial Media -->
-            <v-col cols="12" class="text-right mb-3">
-              <v-btn icon color="primary" class="mr-2" @click="facebook()">
-                <v-icon>mdi-facebook</v-icon>
-              </v-btn>
-              <v-btn icon color="primary" class="mr-2" @click="twitter()">
-                <v-icon>mdi-twitter</v-icon>
-              </v-btn>
-              <v-btn icon class="mr-2" @click="instagram()">
-                <v-icon>mdi-instagram</v-icon>
-              </v-btn>
-              <v-btn icon color="error" class="mr-2" @click="youtube()">
-                <v-icon>mdi-youtube</v-icon>
-              </v-btn>
             </v-col>
           </v-row>
         </div>
