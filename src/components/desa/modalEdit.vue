@@ -296,13 +296,15 @@ export default {
       data.append("kecamatan_id", this.editedItem.kecamatan_id);
       data.append("desa_foto", this.desa_foto);
 
+      let config = {
+        header: {
+          "Content-Type": "multipart/form-data",
+        },
+      };
+
       const url = process.env.VUE_APP_API_BASE + "desainfo";
       this.http
-        .put(url, data, {
-          headers: {
-            "Content-Type": "multipart/form-data",
-          },
-        })
+        .put(url, data, config)
         .then((response) => {
           this.btnLoading = true;
           if (response.data.success) {

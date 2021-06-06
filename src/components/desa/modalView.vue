@@ -114,16 +114,16 @@
           <v-row>
             <!-- Sosial Media -->
             <v-col cols="12" class="text-right mb-3">
-              <v-btn icon color="primary" class="mr-2">
+              <v-btn icon color="primary" class="mr-2" @click="facebook()">
                 <v-icon>mdi-facebook</v-icon>
               </v-btn>
-              <v-btn icon color="primary" class="mr-2">
+              <v-btn icon color="primary" class="mr-2" @click="twitter()">
                 <v-icon>mdi-twitter</v-icon>
               </v-btn>
-              <v-btn icon class="mr-2">
+              <v-btn icon class="mr-2" @click="instagram()">
                 <v-icon>mdi-instagram</v-icon>
               </v-btn>
-              <v-btn icon color="error" class="mr-2">
+              <v-btn icon color="error" class="mr-2" @click="youtube()">
                 <v-icon>mdi-youtube</v-icon>
               </v-btn>
             </v-col>
@@ -177,6 +177,22 @@ export default {
       } else {
         return process.env.VUE_APP_API_BASE + "upload/default.jpg";
       }
+    },
+
+    facebook() {
+      window.open("" + this.viewItem.desa_fb + "", "_blank");
+    },
+
+    twitter() {
+      window.open("" + this.viewItem.desa_twitter + "", "_blank");
+    },
+
+    instagram() {
+      window.open("" + this.viewItem.desa_ig + "", "_blank");
+    },
+
+    youtube() {
+      window.open("" + this.viewItem.desa_yt + "", "_blank");
     },
 
     closeModal() {

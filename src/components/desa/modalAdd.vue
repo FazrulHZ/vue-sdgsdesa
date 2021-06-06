@@ -263,13 +263,15 @@ export default {
       data.append("kabupaten_id", this.kabupaten.kabupaten_id);
       data.append("kecamatan_id", this.kecamatan_id);
 
+      let config = {
+        header: {
+          "Content-Type": "multipart/form-data",
+        },
+      };
+
       const url = process.env.VUE_APP_API_BASE + "desainfo";
       this.http
-        .post(url, data, {
-          headers: {
-            "Content-Type": "multipart/form-data",
-          },
-        })
+        .post(url, data, config)
         .then((response) => {
           this.btnLoading = true;
           if (response.data.success) {
@@ -302,7 +304,6 @@ export default {
     onFile(value) {
       this.desa_foto = value;
       this.urlImage = URL.createObjectURL(this.desa_foto);
-      console.log(value);
     },
 
     async selectKecamatan(value) {
