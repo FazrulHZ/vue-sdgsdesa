@@ -2,7 +2,7 @@
   <v-dialog v-model="modalHapus" :width="CWidth">
     <v-card>
       <v-toolbar dark color="utama" dense flat>
-        <v-toolbar-title>Hapus Data Desa</v-toolbar-title>
+        <v-toolbar-title>Hapus Data User</v-toolbar-title>
         <v-spacer></v-spacer>
         <v-btn icon dark @click="closeModal()">
           <v-icon>mdi-close</v-icon>
@@ -43,8 +43,8 @@
 </template>
 
 <script>
-import modalHapus from "@/store/desa/modalHapus";
-import refreshView from "@/store/desa/viewDesa";
+import modalHapus from "@/store/user/modalHapus";
+import refreshView from "@/store/user/viewUser";
 
 export default {
   computed: {
@@ -58,7 +58,7 @@ export default {
     },
     hapusItem: {
       get() {
-        return modalHapus.state.desa;
+        return modalHapus.state.user;
       },
       set(value) {
         console.log(value);
@@ -85,7 +85,7 @@ export default {
       this.btnLoading = false;
 
       const url =
-        process.env.VUE_APP_API_BASE + "desainfo/" + this.hapusItem.desa_id;
+        process.env.VUE_APP_API_BASE + "userinfo/" + this.hapusItem.user_id;
       this.http
         .delete(url)
         .then((response) => {

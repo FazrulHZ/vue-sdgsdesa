@@ -53,6 +53,15 @@
           </v-list-item-icon>
           <v-list-item-title>LKD</v-list-item-title>
         </v-list-item>
+
+        <v-divider></v-divider>
+
+        <v-list-item :to="'/user'">
+          <v-list-item-icon>
+            <v-icon>mdi-shield-account-outline</v-icon>
+          </v-list-item-icon>
+          <v-list-item-title>User</v-list-item-title>
+        </v-list-item>
       </v-list-item-group>
     </v-list>
   </v-navigation-drawer>

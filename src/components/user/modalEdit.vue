@@ -7,7 +7,7 @@
   >
     <v-card>
       <v-toolbar dark color="utama" dense flat>
-        <v-toolbar-title>Edit Data Desa</v-toolbar-title>
+        <v-toolbar-title>Edit Data User</v-toolbar-title>
         <v-spacer></v-spacer>
         <v-btn icon dark @click="closeModal()">
           <v-icon>mdi-close</v-icon>
@@ -49,96 +49,96 @@
           </v-row>
 
           <v-row>
-            <!-- Nama Desa -->
+            <!-- Nama user -->
             <v-col cols="12" class="mb-n8">
-              <span class="subtitle-2">Nama Desa</span>
+              <span class="subtitle-2">Nama user</span>
               <v-text-field
                 dense
                 flat
                 outlined
                 class="mt-2"
-                v-model="editedItem.desa_nama"
+                v-model="editedItem.user_nama"
               ></v-text-field>
             </v-col>
           </v-row>
 
           <v-row>
-            <!-- Email Desa -->
+            <!-- Email user -->
             <v-col cols="12" md="4" class="mb-n8">
-              <span class="subtitle-2">Email Desa</span>
+              <span class="subtitle-2">Email user</span>
               <v-text-field
                 dense
                 flat
                 outlined
                 class="mt-2"
-                v-model="editedItem.desa_email"
+                v-model="editedItem.user_email"
                 append-icon="mdi-email"
               ></v-text-field>
             </v-col>
 
-            <!-- Website Desa -->
+            <!-- Website user -->
             <v-col cols="12" md="8" class="mb-n8">
-              <span class="subtitle-2">Website Desa</span>
+              <span class="subtitle-2">Website user</span>
               <v-text-field
                 dense
                 flat
                 outlined
                 class="mt-2"
-                v-model="editedItem.desa_web"
+                v-model="editedItem.user_web"
                 append-icon="mdi-web"
               ></v-text-field>
             </v-col>
           </v-row>
 
           <v-row>
-            <!-- Facebook Desa -->
+            <!-- Facebook user -->
             <v-col cols="12" md="3" class="mb-n8">
-              <span class="subtitle-2">Facebook Desa</span>
+              <span class="subtitle-2">Facebook user</span>
               <v-text-field
                 dense
                 flat
                 outlined
                 class="mt-2"
-                v-model="editedItem.desa_fb"
+                v-model="editedItem.user_fb"
                 append-icon="mdi-facebook"
               ></v-text-field>
             </v-col>
 
-            <!-- Twitter Desa -->
+            <!-- Twitter user -->
             <v-col cols="12" md="3" class="mb-n8">
-              <span class="subtitle-2">Twitter Desa</span>
+              <span class="subtitle-2">Twitter user</span>
               <v-text-field
                 dense
                 flat
                 outlined
                 class="mt-2"
-                v-model="editedItem.desa_twitter"
+                v-model="editedItem.user_twitter"
                 append-icon="mdi-twitter"
               ></v-text-field>
             </v-col>
 
-            <!-- Instagram Desa -->
+            <!-- Instagram user -->
             <v-col cols="12" md="3" class="mb-n8">
-              <span class="subtitle-2">Instagram Desa</span>
+              <span class="subtitle-2">Instagram user</span>
               <v-text-field
                 dense
                 flat
                 outlined
                 class="mt-2"
-                v-model="editedItem.desa_ig"
+                v-model="editedItem.user_ig"
                 append-icon="mdi-instagram"
               ></v-text-field>
             </v-col>
 
-            <!-- Youtube Desa -->
+            <!-- Youtube user -->
             <v-col cols="12" md="3" class="mb-n8">
-              <span class="subtitle-2">Youtube Desa</span>
+              <span class="subtitle-2">Youtube user</span>
               <v-text-field
                 dense
                 flat
                 outlined
                 class="mt-2"
-                v-model="editedItem.desa_yt"
+                v-model="editedItem.user_yt"
                 append-icon="mdi-youtube"
               ></v-text-field>
             </v-col>
@@ -153,7 +153,7 @@
                 flat
                 outlined
                 class="mt-2"
-                v-model="editedItem.desa_status_pemerintahan"
+                v-model="editedItem.user_status_pemerintahan"
               ></v-text-field>
             </v-col>
           </v-row>
@@ -161,9 +161,9 @@
           <v-row>
             <!-- Preview -->
             <v-col cols="12">
-              <span class="subtitle-2">Foto desa</span>
+              <span class="subtitle-2">Foto user</span>
               <v-img
-                :src="getIMG(editedItem.desa_foto)"
+                :src="getIMG(editedItem.user_foto)"
                 max-width="200"
               ></v-img>
             </v-col>
@@ -179,7 +179,7 @@
                 outlined
                 prepend-icon
                 accept="image/png, image/jpeg, image/bmp"
-                placeholder="Pilih Foto desa"
+                placeholder="Pilih Foto user"
                 append-icon="mdi-camera"
                 @change="onFile"
                 ref="avatar"
@@ -208,8 +208,8 @@
 </template>
 
 <script>
-import modalEdit from "@/store/desa/modalEdit";
-import refreshView from "@/store/desa/viewDesa";
+import modalEdit from "@/store/user/modalEdit";
+import refreshView from "@/store/user/viewUser";
 import getRef from "@/helper/getRef.js";
 
 export default {
@@ -225,7 +225,7 @@ export default {
 
     editedItem: {
       get() {
-        return modalEdit.state.desa;
+        return modalEdit.state.user;
       },
       set(value) {
         console.log(value);
@@ -234,7 +234,7 @@ export default {
 
     watchKabupaten: {
       get() {
-        return modalEdit.state.desa.kabupaten_id;
+        return modalEdit.state.user.kabupaten_id;
       },
     },
   },
@@ -263,14 +263,14 @@ export default {
     refKabupaten: [],
     refKecamatan: [],
 
-    desa_foto: "",
+    user_foto: "",
     urlImage: "",
   }),
 
   methods: {
     getIMG(value) {
       if (value) {
-        return process.env.VUE_APP_API_BASE + "upload/desaGambar/" + value;
+        return process.env.VUE_APP_API_BASE + "upload/userGambar/" + value;
       } else {
         return process.env.VUE_APP_API_BASE + "upload/default.svg";
       }
@@ -280,21 +280,21 @@ export default {
       this.btnLoading = false;
 
       const data = new FormData();
-      data.append("desa_id", this.editedItem.desa_id);
-      data.append("desa_nama", this.editedItem.desa_nama);
-      data.append("desa_email", this.editedItem.desa_email);
-      data.append("desa_web", this.editedItem.desa_web);
-      data.append("desa_fb", this.editedItem.desa_fb);
-      data.append("desa_twitter", this.editedItem.desa_twitter);
-      data.append("desa_ig", this.editedItem.desa_ig);
-      data.append("desa_yt", this.editedItem.desa_yt);
+      data.append("user_id", this.editedItem.user_id);
+      data.append("user_nama", this.editedItem.user_nama);
+      data.append("user_email", this.editedItem.user_email);
+      data.append("user_web", this.editedItem.user_web);
+      data.append("user_fb", this.editedItem.user_fb);
+      data.append("user_twitter", this.editedItem.user_twitter);
+      data.append("user_ig", this.editedItem.user_ig);
+      data.append("user_yt", this.editedItem.user_yt);
       data.append(
-        "desa_status_pemerintahan",
-        this.editedItem.desa_status_pemerintahan
+        "user_status_pemerintahan",
+        this.editedItem.user_status_pemerintahan
       );
       data.append("kabupaten_id", this.editedItem.kabupaten_id);
       data.append("kecamatan_id", this.editedItem.kecamatan_id);
-      data.append("desa_foto", this.desa_foto);
+      data.append("user_foto", this.user_foto);
 
       let config = {
         header: {
@@ -302,7 +302,7 @@ export default {
         },
       };
 
-      const url = process.env.VUE_APP_API_BASE + "desainfo";
+      const url = process.env.VUE_APP_API_BASE + "userinfo";
       this.http
         .put(url, data, config)
         .then((response) => {
@@ -335,8 +335,8 @@ export default {
     },
 
     onFile(value) {
-      this.desa_foto = value;
-      this.urlImage = URL.createObjectURL(this.desa_foto);
+      this.user_foto = value;
+      this.urlImage = URL.createObjectURL(this.user_foto);
     },
 
     closeModal() {

@@ -3,7 +3,7 @@
     <div>
       <v-card outlined class="py-3 px-5 mb-5 elevation-2">
         <v-row no-gutters>
-          <h3 class="my-auto">Data Desa</h3>
+          <h3 class="my-auto">Data User</h3>
           <v-spacer></v-spacer>
           <CModalAdd />
         </v-row>
@@ -21,7 +21,7 @@
 
     <v-data-table
       :headers="headers"
-      :items="desas"
+      :items="users"
       item-key="name"
       class="elevation-1"
     >
@@ -32,7 +32,7 @@
       </template>
       <template v-slot:[`item.nomor`]="{ item }">
         {{
-          desas
+          users
             .map(function(x) {
               return x.org_id;
             })
@@ -55,15 +55,14 @@
 </template>
 
 <script>
-import CModalAdd from "@/components/desa/modalAdd";
-import CModalEdit from "@/components/desa/modalEdit";
-import CModalDelete from "@/components/desa/modalDelete";
-import CModalView from "@/components/desa/modalView";
-
-import modalView from "@/store/desa/modalView";
-import modalEdit from "@/store/desa/modalEdit";
-import modalHapus from "@/store/desa/modalHapus";
-import refreshView from "@/store/desa/viewDesa";
+import CModalAdd from "@/components/user/modalAdd";
+import CModalEdit from "@/components/user/modalEdit";
+import CModalDelete from "@/components/user/modalDelete";
+import CModalView from "@/components/user/modalView";
+import modalView from "@/store/user/modalView";
+import modalEdit from "@/store/user/modalEdit";
+import modalHapus from "@/store/user/modalHapus";
+import refreshView from "@/store/user/viewUser";
 
 export default {
   components: {
@@ -118,8 +117,8 @@ export default {
     },
   },
   data: () => ({
-    desas: [],
-    desa: {},
+    users: [],
+    user: {},
     viewIndex: "",
     editedIndex: "",
     dleteIndex: "",
@@ -131,9 +130,9 @@ export default {
         align: "center",
         sortable: false,
       },
-      { text: "Nama desa", align: "start", value: "desa_nama" },
-      { text: "Kecamatan", align: "start", value: "kecamatan_nama" },
-      { text: "Kabupaten", align: "start", value: "kabupaten_nama" },
+      { text: "NIK", align: "start", value: "user_ktp" },
+      { text: "Nama User", align: "start", value: "user_nama" },
+      { text: "Telepon", align: "start", value: "user_tlp" },
       { text: "Action", value: "action", width: "100px" },
     ],
   }),
@@ -143,30 +142,30 @@ export default {
   methods: {
     getData() {
       this.http
-        .get(process.env.VUE_APP_API_BASE + "desainfo")
+        .get(process.env.VUE_APP_API_BASE + "user")
         .then((res) => {
           refreshView.commit("refreshData", false);
-          this.desas = res.data.data;
+          this.users = res.data.data;
         })
         .catch((err) => {
           console.log(err);
         });
     },
     viewItem(item) {
-      this.viewIndex = this.desas.indexOf(item);
-      this.desa = Object.assign({}, item);
+      this.viewIndex = this.users.indexOf(item);
+      this.user = Object.assign({}, item);
       modalView.commit("toggleModal", true);
       modalView.commit("viewModal", Object.assign({}, item));
     },
     editItem(item) {
-      this.editedIndex = this.desas.indexOf(item);
-      this.desa = Object.assign({}, item);
+      this.editedIndex = this.users.indexOf(item);
+      this.user = Object.assign({}, item);
       modalEdit.commit("toggleModal", true);
       modalEdit.commit("viewModal", Object.assign({}, item));
     },
     deleteItem(item) {
-      this.dleteIndex = this.desas.indexOf(item);
-      this.desa = Object.assign({}, item);
+      this.dleteIndex = this.users.indexOf(item);
+      this.user = Object.assign({}, item);
       modalHapus.commit("toggleModal", true);
       modalHapus.commit("viewModal", Object.assign({}, item));
     },

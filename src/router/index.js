@@ -40,6 +40,11 @@ const routes = [
           path: '/lkd',
           name: 'LKD',
           component: () => import(/* webpackChunkName: "LKD" */ '../views/Lkd.vue')
+        },
+        {
+          path: '/user',
+          name: 'User',
+          component: () => import(/* webpackChunkName: "User" */ '../views/User.vue')
         }
       ]
   }
