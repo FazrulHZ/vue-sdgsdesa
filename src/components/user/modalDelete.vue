@@ -85,7 +85,7 @@ export default {
       this.btnLoading = false;
 
       const url =
-        process.env.VUE_APP_API_BASE + "userinfo/" + this.hapusItem.user_id;
+        process.env.VUE_APP_API_BASE + "user/" + this.hapusItem.user_id;
       this.http
         .delete(url)
         .then((response) => {
