@@ -114,10 +114,14 @@
 </template>
 
 <script>
+import Cookie from "@/helper/cookie.js";
+
 export default {
   data: () => ({
     iconColor: "utama",
     drawer: null,
+
+    token: "",
 
     jumlahDesa: 0,
     jumlahRT: 0,
@@ -125,7 +129,8 @@ export default {
     jumlahPenduduk: 0,
   }),
 
-  mounted() {
+  async mounted() {
+    this.token = await Cookie.get("token");
     this.getDesa();
     this.getRT();
     this.getKK();
@@ -135,7 +140,11 @@ export default {
   methods: {
     getDesa() {
       this.http
-        .get(process.env.VUE_APP_API_BASE + "desainfo/")
+        .get(process.env.VUE_APP_API_BASE + "desainfo/", {
+          headers: {
+            Authorization: "Bearer " + this.token,
+          },
+        })
         .then((res) => {
           this.jumlahDesa = res.data.count;
         })
@@ -146,7 +155,11 @@ export default {
 
     getRT() {
       this.http
-        .get(process.env.VUE_APP_API_BASE + "rt/")
+        .get(process.env.VUE_APP_API_BASE + "rt/", {
+          headers: {
+            Authorization: "Bearer " + this.token,
+          },
+        })
         .then((res) => {
           this.jumlahRT = res.data.count;
         })
@@ -157,7 +170,11 @@ export default {
 
     getKK() {
       this.http
-        .get(process.env.VUE_APP_API_BASE + "kk/")
+        .get(process.env.VUE_APP_API_BASE + "kk/", {
+          headers: {
+            Authorization: "Bearer " + this.token,
+          },
+        })
         .then((res) => {
           this.jumlahKK = res.data.count;
         })
@@ -168,7 +185,11 @@ export default {
 
     getPenduduk() {
       this.http
-        .get(process.env.VUE_APP_API_BASE + "penduduk/")
+        .get(process.env.VUE_APP_API_BASE + "penduduk/", {
+          headers: {
+            Authorization: "Bearer " + this.token,
+          },
+        })
         .then((res) => {
           this.jumlahPenduduk = res.data.count;
         })

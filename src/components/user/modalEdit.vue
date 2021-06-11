@@ -138,6 +138,8 @@
 </template>
 
 <script>
+import Cookie from "@/helper/cookie.js";
+
 import modalEdit from "@/store/user/modalEdit";
 import refreshView from "@/store/user/viewUser";
 
@@ -162,6 +164,12 @@ export default {
     },
   },
 
+  watch: {
+    async modalEdit() {
+      this.token = await Cookie.get("token");
+    },
+  },
+
   created() {
     if (
       this.$vuetify.breakpoint.name == "xs" ||
@@ -172,6 +180,7 @@ export default {
   },
 
   data: () => ({
+    token: "",
     btnLoading: true,
     show: false,
 
@@ -200,15 +209,13 @@ export default {
       data.append("user_alamat", this.editedItem.user_alamat);
       data.append("user_foto", this.user_foto);
 
-      let config = {
-        header: {
-          "Content-Type": "multipart/form-data",
-        },
-      };
-
       const url = process.env.VUE_APP_API_BASE + "user";
       this.http
-        .put(url, data, config)
+        .put(url, data, {
+          headers: {
+            Authorization: "Bearer " + this.token,
+          },
+        })
         .then((response) => {
           this.btnLoading = true;
           if (response.data.success) {

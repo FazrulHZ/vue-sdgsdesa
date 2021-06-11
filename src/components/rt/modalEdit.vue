@@ -159,6 +159,8 @@
 </template>
 
 <script>
+import Cookie from "@/helper/cookie.js";
+
 import modalEdit from "@/store/rt/modalEdit";
 import refreshView from "@/store/rt/viewRt";
 import getRef from "@/helper/getRef.js";
@@ -198,6 +200,7 @@ export default {
 
   watch: {
     async modalEdit() {
+      this.token = await Cookie.get("token");
       this.refKabupaten = await getRef.Kabupaten();
     },
 
@@ -211,7 +214,9 @@ export default {
   },
 
   data: () => ({
+    token: "",
     btnLoading: true,
+
     refKabupaten: [],
     refKecamatan: [],
     refDesa: [],
@@ -242,7 +247,11 @@ export default {
 
       const url = process.env.VUE_APP_API_BASE + "rt";
       this.http
-        .put(url, data)
+        .put(url, data, {
+          headers: {
+            Authorization: "Bearer " + this.token,
+          },
+        })
         .then((response) => {
           this.btnLoading = true;
           if (response.data.success) {

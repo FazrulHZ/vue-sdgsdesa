@@ -208,6 +208,8 @@
 </template>
 
 <script>
+import Cookie from "@/helper/cookie.js";
+
 import modalEdit from "@/store/desa/modalEdit";
 import refreshView from "@/store/desa/viewDesa";
 import getRef from "@/helper/getRef.js";
@@ -241,6 +243,7 @@ export default {
 
   watch: {
     async modalEdit() {
+      this.token = await Cookie.get("token");
       this.refKabupaten = await getRef.Kabupaten();
     },
 
@@ -259,7 +262,9 @@ export default {
   },
 
   data: () => ({
+    token: "",
     btnLoading: true,
+
     refKabupaten: [],
     refKecamatan: [],
 
@@ -272,7 +277,7 @@ export default {
       if (value) {
         return process.env.VUE_APP_API_BASE + "upload/desaGambar/" + value;
       } else {
-        return process.env.VUE_APP_API_BASE + "upload/default.svg";
+        return process.env.VUE_APP_API_BASE + "upload/default.jpg";
       }
     },
 
@@ -296,15 +301,13 @@ export default {
       data.append("kecamatan_id", this.editedItem.kecamatan_id);
       data.append("desa_foto", this.desa_foto);
 
-      let config = {
-        header: {
-          "Content-Type": "multipart/form-data",
-        },
-      };
-
       const url = process.env.VUE_APP_API_BASE + "desainfo";
       this.http
-        .put(url, data, config)
+        .put(url, data, {
+          headers: {
+            Authorization: "Bearer " + this.token,
+          },
+        })
         .then((response) => {
           this.btnLoading = true;
           if (response.data.success) {

@@ -221,11 +221,14 @@
 </template>
 
 <script>
+import Cookie from "@/helper/cookie.js";
+
 import refreshView from "@/store/kk/viewKk";
 import getRef from "@/helper/getRef.js";
 
 export default {
   data: () => ({
+    token: "",
     ModalAdd: false,
     btnLoading: true,
 
@@ -250,6 +253,7 @@ export default {
 
   methods: {
     async openModal() {
+      this.token = await Cookie.get("token");
       this.refKabupaten = await getRef.Kabupaten();
       this.ModalAdd = true;
     },
@@ -274,7 +278,11 @@ export default {
 
       const url = process.env.VUE_APP_API_BASE + "kk";
       this.http
-        .post(url, data)
+        .post(url, data, {
+          headers: {
+            Authorization: "Bearer " + this.token,
+          },
+        })
         .then((response) => {
           this.btnLoading = true;
           if (response.data.success) {

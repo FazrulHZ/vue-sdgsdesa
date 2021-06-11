@@ -43,6 +43,8 @@
 </template>
 
 <script>
+import Cookie from "@/helper/cookie.js";
+
 import modalHapus from "@/store/desa/modalHapus";
 import refreshView from "@/store/desa/viewDesa";
 
@@ -56,6 +58,7 @@ export default {
         modalHapus.commit("toggleModal", value);
       },
     },
+
     hapusItem: {
       get() {
         return modalHapus.state.desa;
@@ -63,6 +66,12 @@ export default {
       set(value) {
         console.log(value);
       },
+    },
+  },
+
+  watch: {
+    async modalHapus() {
+      this.token = await Cookie.get("token");
     },
   },
 
@@ -76,6 +85,8 @@ export default {
   },
 
   data: () => ({
+    token: "",
+
     btnLoading: true,
     CWidth: "50%",
   }),
@@ -84,10 +95,19 @@ export default {
     async hapus() {
       this.btnLoading = false;
 
-      const url =
-        process.env.VUE_APP_API_BASE + "desainfo/" + this.hapusItem.desa_id;
+      const url = process.env.VUE_APP_API_BASE + "desainfo/";
+
+      let data = {
+        desa_id: this.hapusItem.desa_id,
+      };
+
       this.http
-        .delete(url)
+        .delete(url, {
+          headers: {
+            Authorization: "Bearer " + this.token,
+          },
+          data: data,
+        })
         .then((response) => {
           this.btnLoading = true;
           if (response.data.success) {

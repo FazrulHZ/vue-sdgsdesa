@@ -129,9 +129,15 @@ export default {
           const response = await this.http.post(url, data);
           if (response.data.success) {
             await Cookie.set("session_ok", response.data.success);
-            await Cookie.set("user_nama", response.data.data.user_nama);
-            await Cookie.set("user_foto", response.data.data.user_foto);
-            console.log(response.data);
+            await Cookie.set(
+              "user_nama",
+              response.data.data.identitas.user_nama
+            );
+            await Cookie.set(
+              "user_foto",
+              response.data.data.identitas.user_foto
+            );
+            await Cookie.set("token", response.data.data.token);
             this.alertGagal = false;
             this.$router.push("/");
             this.loadingButton = true;

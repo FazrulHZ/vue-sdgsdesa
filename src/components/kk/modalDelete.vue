@@ -45,6 +45,8 @@
 </template>
 
 <script>
+import Cookie from "@/helper/cookie.js";
+
 import modalHapus from "@/store/kk/modalHapus";
 import refreshView from "@/store/kk/viewKk";
 
@@ -58,6 +60,7 @@ export default {
         modalHapus.commit("toggleModal", value);
       },
     },
+
     hapusItem: {
       get() {
         return modalHapus.state.kk;
@@ -65,6 +68,12 @@ export default {
       set(value) {
         console.log(value);
       },
+    },
+  },
+
+  watch: {
+    async modalHapus() {
+      this.token = await Cookie.get("token");
     },
   },
 
@@ -78,6 +87,7 @@ export default {
   },
 
   data: () => ({
+    token: "",
     btnLoading: true,
     CWidth: "50%",
   }),
@@ -88,7 +98,11 @@ export default {
 
       const url = process.env.VUE_APP_API_BASE + "kk/" + this.hapusItem.kk_id;
       this.http
-        .delete(url)
+        .delete(url, {
+          headers: {
+            Authorization: "Bearer " + this.token,
+          },
+        })
         .then((response) => {
           this.btnLoading = true;
           if (response.data.success) {

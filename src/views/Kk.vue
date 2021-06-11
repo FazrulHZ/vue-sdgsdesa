@@ -55,6 +55,8 @@
 </template>
 
 <script>
+import Cookie from "@/helper/cookie.js";
+
 import CModalAdd from "@/components/kk/modalAdd";
 import CModalEdit from "@/components/kk/modalEdit";
 import CModalDelete from "@/components/kk/modalDelete";
@@ -72,17 +74,20 @@ export default {
     CModalDelete,
     CModalView,
   },
+
   computed: {
     refresh: {
       get() {
         return refreshView.state.Refresh;
       },
     },
+
     alertMassage: {
       get() {
         return refreshView.state.alertMassage;
       },
     },
+
     success: {
       get() {
         return refreshView.state.success;
@@ -91,6 +96,7 @@ export default {
         refreshView.commit("alert", value);
       },
     },
+
     alertBerhasil: {
       get() {
         return refreshView.state.alertBerhasil;
@@ -99,6 +105,7 @@ export default {
         refreshView.commit("berhasilAlert", value);
       },
     },
+
     alertGagal: {
       get() {
         return refreshView.state.alertGagal;
@@ -108,6 +115,7 @@ export default {
       },
     },
   },
+
   watch: {
     refresh() {
       this.getData();
@@ -117,12 +125,17 @@ export default {
       }, 5000);
     },
   },
+
   data: () => ({
+    token: "",
+
     rts: [],
     rt: {},
+
     viewIndex: "",
     editedIndex: "",
     dleteIndex: "",
+
     headers: [
       {
         text: "No",
@@ -140,13 +153,20 @@ export default {
       { text: "Action", value: "action", width: "100px" },
     ],
   }),
-  mounted() {
+
+  async mounted() {
+    this.token = await Cookie.get("token");
     this.getData();
   },
+
   methods: {
     getData() {
       this.http
-        .get(process.env.VUE_APP_API_BASE + "kk")
+        .get(process.env.VUE_APP_API_BASE + "kk", {
+          headers: {
+            Authorization: "Bearer " + this.token,
+          },
+        })
         .then((res) => {
           refreshView.commit("refreshData", false);
           this.rts = res.data.data;
@@ -155,18 +175,21 @@ export default {
           console.log(err);
         });
     },
+
     viewItem(item) {
       this.viewIndex = this.rts.indexOf(item);
       this.rt = Object.assign({}, item);
       modalView.commit("toggleModal", true);
       modalView.commit("viewModal", Object.assign({}, item));
     },
+
     editItem(item) {
       this.editedIndex = this.rts.indexOf(item);
       this.rt = Object.assign({}, item);
       modalEdit.commit("toggleModal", true);
       modalEdit.commit("viewModal", Object.assign({}, item));
     },
+
     deleteItem(item) {
       this.dleteIndex = this.rts.indexOf(item);
       this.rt = Object.assign({}, item);

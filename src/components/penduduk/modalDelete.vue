@@ -45,6 +45,8 @@
 </template>
 
 <script>
+import Cookie from "@/helper/cookie.js";
+
 import modalHapus from "@/store/penduduk/modalHapus";
 import refreshView from "@/store/penduduk/viewPenduduk";
 
@@ -58,6 +60,7 @@ export default {
         modalHapus.commit("toggleModal", value);
       },
     },
+
     hapusItem: {
       get() {
         return modalHapus.state.penduduk;
@@ -65,6 +68,12 @@ export default {
       set(value) {
         console.log(value);
       },
+    },
+  },
+
+  watch: {
+    async modalHapus() {
+      this.token = await Cookie.get("token");
     },
   },
 
@@ -78,6 +87,7 @@ export default {
   },
 
   data: () => ({
+    token: "",
     btnLoading: true,
     CWidth: "50%",
   }),
@@ -86,9 +96,14 @@ export default {
     async hapus() {
       this.btnLoading = false;
 
-      const url = process.env.VUE_APP_API_BASE + "penduduk/" + this.hapusItem.penduduk_id;
+      const url =
+        process.env.VUE_APP_API_BASE + "penduduk/" + this.hapusItem.penduduk_id;
       this.http
-        .delete(url)
+        .delete(url, {
+          headers: {
+            Authorization: "Bearer " + this.token,
+          },
+        })
         .then((response) => {
           this.btnLoading = true;
           if (response.data.success) {
