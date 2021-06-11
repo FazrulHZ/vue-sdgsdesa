@@ -14,6 +14,22 @@
               <div class="text-center">
                 Dari UNG, Untuk Desa
               </div>
+              <div class="my-5">
+                <v-row class="justify-center">
+                  <v-img
+                    src="@/assets/img/ung-logo.png"
+                    max-width="50"
+                    max-height="50"
+                    class="mr-1"
+                  ></v-img>
+                  <v-img
+                    src="@/assets/img/sdgs-logo.png"
+                    max-width="45"
+                    max-height="45"
+                    class="my-auto"
+                  ></v-img>
+                </v-row>
+              </div>
             </div>
             <v-divider></v-divider>
             <div class="mt-5 mb-5">
