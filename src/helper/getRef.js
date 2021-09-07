@@ -109,5 +109,24 @@ export default {
                 }
             ]
         return response
+    },
+
+    Userlvl: () => {
+        const response =
+            [
+                {
+                    id: "1",
+                    nama: "Super Admin",
+                },
+                {
+                    id: "2",
+                    nama: "Admin",
+                },
+                {
+                    id: "3",
+                    nama: "Admin Desa",
+                }
+            ]
+        return response
     }
 }

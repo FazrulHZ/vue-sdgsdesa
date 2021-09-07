@@ -19,7 +19,7 @@
           <v-row>
             <!-- NIK User -->
             <v-col cols="12" md="4" class="mb-n8">
-              <span class="subtitle-2">NIK User</span>
+              <span class="subtitle-2">NIK</span>
               <v-text-field
                 dense
                 flat
@@ -29,9 +29,9 @@
               ></v-text-field>
             </v-col>
 
-            <!-- Nama User -->
+            <!-- Nama -->
             <v-col cols="12" md="8" class="mb-n8">
-              <span class="subtitle-2">Nama User</span>
+              <span class="subtitle-2">Nama</span>
               <v-text-field
                 dense
                 flat
@@ -43,8 +43,21 @@
           </v-row>
 
           <v-row>
+            <!-- Nama User -->
+            <v-col cols="12" md="6" class="mb-n8">
+              <span class="subtitle-2">Nama User</span>
+              <v-text-field
+                dense
+                flat
+                outlined
+                class="mt-2"
+                v-model="editedItem.user_name"
+                autocomplete="off"
+              ></v-text-field>
+            </v-col>
+
             <!-- Password User -->
-            <v-col cols="12" class="mb-n8">
+            <v-col cols="12" md="6" class="mb-n8">
               <span class="subtitle-2">Password User</span>
               <v-text-field
                 dense
@@ -119,8 +132,26 @@
 
           <v-row>
             <!-- Preview -->
-            <v-col cols="12" class="mb-5">
+            <v-col cols="12" class="mb-n2">
               <v-img :src="urlImage" max-width="200"></v-img>
+            </v-col>
+          </v-row>
+
+          <v-row>
+            <!-- User Level -->
+            <v-col cols="12">
+              <span class="subtitle-2">User Level</span>
+              <v-select
+                dense
+                flat
+                outlined
+                class="mt-2"
+                :items="refUserlvl"
+                item-value="id"
+                item-text="nama"
+                v-model="editedItem.user_lvl"
+                autocomplete="off"
+              ></v-select>
             </v-col>
           </v-row>
 
@@ -142,6 +173,7 @@ import Cookie from "@/helper/cookie.js";
 
 import modalEdit from "@/store/user/modalEdit";
 import refreshView from "@/store/user/viewUser";
+import getRef from "@/helper/getRef.js";
 
 export default {
   computed: {
@@ -167,6 +199,7 @@ export default {
   watch: {
     async modalEdit() {
       this.token = await Cookie.get("token");
+      this.refUserlvl = await getRef.Userlvl();
     },
   },
 
@@ -184,6 +217,9 @@ export default {
     btnLoading: true,
     show: false,
 
+    refUserlvl: [],
+
+    user_password: "",
     user_foto: "",
     urlImage: "",
   }),

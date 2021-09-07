@@ -35,34 +35,49 @@
       <v-form ref="form">
         <div class="mx-7 mt-5">
           <v-row>
-            <!-- NIK User -->
+            <!-- NIK -->
             <v-col cols="12" md="4" class="mb-n8">
-              <span class="subtitle-2">NIK User</span>
+              <span class="subtitle-2">NIK</span>
               <v-text-field
                 dense
                 flat
                 outlined
                 class="mt-2"
                 v-model="user_ktp"
+                autocomplete="off"
               ></v-text-field>
             </v-col>
 
-            <!-- Nama User -->
+            <!-- Nama -->
             <v-col cols="12" md="8" class="mb-n8">
-              <span class="subtitle-2">Nama User</span>
+              <span class="subtitle-2">Nama</span>
               <v-text-field
                 dense
                 flat
                 outlined
                 class="mt-2"
                 v-model="user_nama"
+                autocomplete="off"
               ></v-text-field>
             </v-col>
           </v-row>
 
           <v-row>
+            <!-- Nama User -->
+            <v-col cols="12" md="6" class="mb-n8">
+              <span class="subtitle-2">Nama User</span>
+              <v-text-field
+                dense
+                flat
+                outlined
+                class="mt-2"
+                v-model="user_name"
+                autocomplete="off"
+              ></v-text-field>
+            </v-col>
+
             <!-- Password User -->
-            <v-col cols="12" class="mb-n8">
+            <v-col cols="12" md="6" class="mb-n8">
               <span class="subtitle-2">Password User</span>
               <v-text-field
                 dense
@@ -73,6 +88,7 @@
                 :type="show ? 'text' : 'password'"
                 class="mt-2 input-group--focused"
                 @click:append="show = !show"
+                autocomplete="off"
               ></v-text-field>
             </v-col>
           </v-row>
@@ -87,6 +103,7 @@
                 outlined
                 class="mt-2"
                 v-model="user_alamat"
+                autocomplete="off"
               ></v-textarea>
             </v-col>
           </v-row>
@@ -102,6 +119,7 @@
                 class="mt-2"
                 v-model="user_tlp"
                 append-icon="mdi-phone"
+                autocomplete="off"
               ></v-text-field>
             </v-col>
           </v-row>
@@ -126,8 +144,26 @@
 
           <v-row>
             <!-- Preview -->
-            <v-col cols="12" class="mb-5">
+            <v-col cols="12" class="mb-n2">
               <v-img :src="urlImage" max-width="200"></v-img>
+            </v-col>
+          </v-row>
+
+          <v-row>
+            <!-- User Level -->
+            <v-col cols="12">
+              <span class="subtitle-2">User Level</span>
+              <v-select
+                dense
+                flat
+                outlined
+                class="mt-2"
+                :items="refUserlvl"
+                item-value="id"
+                item-text="nama"
+                v-model="user_lvl"
+                autocomplete="off"
+              ></v-select>
             </v-col>
           </v-row>
 
@@ -147,6 +183,7 @@
 <script>
 import Cookie from "@/helper/cookie.js";
 import refreshView from "@/store/user/viewUser";
+import getRef from "@/helper/getRef.js";
 
 export default {
   data: () => ({
@@ -155,18 +192,23 @@ export default {
     btnLoading: true,
     show: false,
 
+    refUserlvl: [],
+
     user_ktp: "",
-    user_password: "",
     user_nama: "",
+    user_name: "",
+    user_password: "",
     user_tlp: "",
     user_alamat: "",
     user_foto: "",
+    user_lvl: "",
     urlImage: "",
   }),
 
   methods: {
     async openModal() {
       this.token = await Cookie.get("token");
+      this.refUserlvl = await getRef.Userlvl();
       this.ModalAdd = true;
     },
 
@@ -175,11 +217,13 @@ export default {
 
       const data = new FormData();
       data.append("user_ktp", this.user_ktp);
-      data.append("user_password", this.user_password);
       data.append("user_nama", this.user_nama);
+      data.append("user_name", this.user_name);
+      data.append("user_password", this.user_password);
       data.append("user_tlp", this.user_tlp);
       data.append("user_alamat", this.user_alamat);
       data.append("user_foto", this.user_foto);
+      data.append("user_lvl", this.user_lvl);
 
       const url = process.env.VUE_APP_API_BASE + "user";
       this.http
