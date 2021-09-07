@@ -24,11 +24,11 @@
               <h4>{{ user_nama }}</h4>
             </div>
             <v-divider></v-divider>
-            <v-btn depressed text>
+            <v-btn depressed text block>
               Profil
             </v-btn>
             <v-divider></v-divider>
-            <v-btn depressed text @click="logOut()">
+            <v-btn depressed text @click="logOut()" block>
               Sigin Out
             </v-btn>
           </div>

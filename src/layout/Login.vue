@@ -41,9 +41,9 @@
             <v-form ref="form">
               <div>
                 <v-text-field
-                  v-model="user_ktp"
+                  v-model="user_name"
                   outlined
-                  label="Nomor Induk KTP"
+                  label="Username"
                   append-icon="mdi-account"
                   :rules="userRules"
                   autocomplete="off"
@@ -103,7 +103,7 @@ export default {
     alertGagal: false,
     pesanGagal: "",
 
-    user_ktp: "",
+    user_name: "",
     userRules: [(value) => !!value || "NIK Tidak Boleh Kosong"],
 
     user_password: "",
@@ -122,7 +122,7 @@ export default {
       const url = process.env.VUE_APP_API_BASE + "login";
       if (this.validate()) {
         let data = {
-          user_ktp: this.user_ktp,
+          user_name: this.user_name,
           user_password: this.user_password,
         };
         try {
