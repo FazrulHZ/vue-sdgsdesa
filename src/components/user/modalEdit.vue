@@ -257,7 +257,7 @@ export default {
 
   watch: {
     async modalEdit() {
-      this.token = await Cookie.get("token");
+      this.session = await JSON.parse(Cookie.dec(Cookie.get("myCookie")));
       this.refUserlvl = await getRef.Userlvl();
       this.refKabupaten = await getRef.Kabupaten();
     },
@@ -281,7 +281,7 @@ export default {
   },
 
   data: () => ({
-    token: "",
+    session: "",
     btnLoading: true,
     show: false,
 
@@ -325,7 +325,7 @@ export default {
       this.http
         .put(url, data, {
           headers: {
-            Authorization: "Bearer " + this.token,
+            Authorization: "Bearer " + this.session.token,
           },
         })
         .then((response) => {

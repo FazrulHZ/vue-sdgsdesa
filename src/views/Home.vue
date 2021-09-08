@@ -34,7 +34,7 @@
 
     <div>
       <v-row>
-        <v-col cols="12" md="3">
+        <v-col cols="12" md="3" v-if="session.user_lvl == 1">
           <v-card elevation="2" to="/desa">
             <v-row no-gutters class="pa-3">
               <div class="mr-3 my-auto">
@@ -51,6 +51,27 @@
             </v-row>
           </v-card>
         </v-col>
+
+        <v-col cols="12" md="3" v-else>
+          <v-card elevation="2" to="/profildesa">
+            <v-row no-gutters class="pa-3">
+              <div class="mr-3 my-auto">
+                <v-icon size="65" :color="iconColor"
+                  >mdi-folder-home-outline</v-icon
+                >
+              </div>
+              <div>
+                <div>
+                  <h1>Profil</h1>
+                </div>
+                <div>
+                  Desa
+                </div>
+              </div>
+            </v-row>
+          </v-card>
+        </v-col>
+
         <v-col cols="12" md="3">
           <v-card elevation="2" to="/rt">
             <v-row no-gutters class="pa-3">
@@ -70,6 +91,7 @@
             </v-row>
           </v-card>
         </v-col>
+
         <v-col cols="12" md="3">
           <v-card elevation="2" to="/kk">
             <v-row no-gutters class="pa-3">
@@ -89,6 +111,7 @@
             </v-row>
           </v-card>
         </v-col>
+
         <v-col cols="12" md="3">
           <v-card elevation="2" to="/penduduk">
             <v-row no-gutters class="pa-3">
@@ -118,10 +141,9 @@ import Cookie from "@/helper/cookie.js";
 
 export default {
   data: () => ({
+    session: "",
     iconColor: "utama",
     drawer: null,
-
-    token: "",
 
     jumlahDesa: 0,
     jumlahRT: 0,
@@ -130,7 +152,7 @@ export default {
   }),
 
   async mounted() {
-    this.token = await Cookie.get("token");
+    this.session = await JSON.parse(Cookie.dec(Cookie.get("myCookie")));
     this.getDesa();
     this.getRT();
     this.getKK();
@@ -142,7 +164,7 @@ export default {
       this.http
         .get(process.env.VUE_APP_API_BASE + "desainfo/", {
           headers: {
-            Authorization: "Bearer " + this.token,
+            Authorization: "Bearer " + this.session.token,
           },
         })
         .then((res) => {
@@ -157,7 +179,7 @@ export default {
       this.http
         .get(process.env.VUE_APP_API_BASE + "rt/", {
           headers: {
-            Authorization: "Bearer " + this.token,
+            Authorization: "Bearer " + this.session.token,
           },
         })
         .then((res) => {
@@ -172,7 +194,7 @@ export default {
       this.http
         .get(process.env.VUE_APP_API_BASE + "kk/", {
           headers: {
-            Authorization: "Bearer " + this.token,
+            Authorization: "Bearer " + this.session.token,
           },
         })
         .then((res) => {
@@ -187,7 +209,7 @@ export default {
       this.http
         .get(process.env.VUE_APP_API_BASE + "penduduk/", {
           headers: {
-            Authorization: "Bearer " + this.token,
+            Authorization: "Bearer " + this.session.token,
           },
         })
         .then((res) => {

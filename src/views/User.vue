@@ -126,7 +126,7 @@ export default {
     },
   },
   data: () => ({
-    token: "",
+    session: "",
 
     users: [],
     user: {},
@@ -151,7 +151,7 @@ export default {
   }),
 
   async mounted() {
-    this.token = await Cookie.get("token");
+    this.session = await JSON.parse(Cookie.dec(Cookie.get("myCookie")));
     this.getData();
   },
   methods: {
@@ -159,7 +159,7 @@ export default {
       this.http
         .get(process.env.VUE_APP_API_BASE + "user", {
           headers: {
-            Authorization: "Bearer " + this.token,
+            Authorization: "Bearer " + this.session.token,
           },
         })
         .then((res) => {

@@ -44,14 +44,17 @@ import Cookie from "@/helper/cookie.js";
 
 export default {
   data: () => ({
+    session: "",
     drawer: null,
+    
     user_nama: "",
     user_foto: "",
   }),
 
   async mounted() {
-    this.user_nama = await Cookie.get("user_nama");
-    this.user_foto = await Cookie.get("user_foto");
+    this.session = await JSON.parse(Cookie.dec(Cookie.get("myCookie")));
+    this.user_nama = this.session.user_nama;
+    this.user_foto = this.session.user_foto;
   },
 
   methods: {

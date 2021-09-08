@@ -73,7 +73,7 @@ export default {
 
   watch: {
     async modalHapus() {
-      this.token = await Cookie.get("token");
+      this.session = await JSON.parse(Cookie.dec(Cookie.get("myCookie")));
     },
   },
 
@@ -87,7 +87,7 @@ export default {
   },
 
   data: () => ({
-    token: "",
+    session: "",
     btnLoading: true,
     CWidth: "50%",
   }),
@@ -101,7 +101,7 @@ export default {
       this.http
         .delete(url, {
           headers: {
-            Authorization: "Bearer " + this.token,
+            Authorization: "Bearer " + this.session.token,
           },
         })
         .then((response) => {

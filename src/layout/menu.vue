@@ -19,7 +19,7 @@
           <v-list-item-title>Home</v-list-item-title>
         </v-list-item>
 
-        <v-list-item :to="'/desa'">
+        <v-list-item :to="'/desa'" v-if="session.user_lvl == 1">
           <v-list-item-icon>
             <v-icon>mdi-home-group</v-icon>
           </v-list-item-icon>
@@ -54,9 +54,9 @@
           <v-list-item-title>LKD</v-list-item-title>
         </v-list-item>
 
-        <v-divider></v-divider>
+        <v-divider v-if="session.user_lvl == 1"></v-divider>
 
-        <v-list-item :to="'/user'">
+        <v-list-item :to="'/user'" v-if="session.user_lvl == 1">
           <v-list-item-icon>
             <v-icon>mdi-shield-account-outline</v-icon>
           </v-list-item-icon>
@@ -68,6 +68,8 @@
 </template>
 
 <script>
+import Cookie from "@/helper/cookie.js";
+
 import drawerState from "@/store/drawerMenu";
 export default {
   computed: {
@@ -80,6 +82,14 @@ export default {
         drawerState.commit("toggle", value);
       },
     },
+  },
+
+  data: () => ({
+    session: "",
+  }),
+
+  async mounted() {
+    this.session = await JSON.parse(Cookie.dec(Cookie.get("myCookie")));
   },
 };
 </script>

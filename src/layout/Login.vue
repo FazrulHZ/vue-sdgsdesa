@@ -120,26 +120,31 @@ export default {
       this.loadingButton = false;
       this.validate();
       const url = process.env.VUE_APP_API_BASE + "login";
+
       if (this.validate()) {
         let data = {
           user_name: this.user_name,
           user_password: this.user_password,
         };
+
         try {
           const response = await this.http.post(url, data);
           if (response.data.success) {
-            await Cookie.set("session_ok", response.data.success);
             await Cookie.set(
-              "user_nama",
-              response.data.data.identitas.user_nama
+              "myCookie",
+              Cookie.enc(
+                JSON.stringify({
+                  session_ok: response.data.success,
+                  user_nama: response.data.data.identitas.user_nama,
+                  user_name: response.data.data.identitas.user_name,
+                  user_lvl: response.data.data.identitas.user_lvl,
+                  user_foto: response.data.data.identitas.user_foto,
+                  token: response.data.data.token,
+                })
+              )
             );
-            await Cookie.set(
-              "user_foto",
-              response.data.data.identitas.user_foto
-            );
-            await Cookie.set("token", response.data.data.token);
             this.alertGagal = false;
-            this.$router.push("/");
+            this.$router.push("/").catch(() => {});
             this.loadingButton = true;
           }
         } catch (error) {

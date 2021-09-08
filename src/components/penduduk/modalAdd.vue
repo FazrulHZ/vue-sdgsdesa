@@ -290,7 +290,7 @@ import getRef from "@/helper/getRef.js";
 
 export default {
   data: () => ({
-    token: "",
+    session: "",
     ModalAdd: false,
     btnLoading: true,
     tglLahirPicker: false,
@@ -322,7 +322,7 @@ export default {
 
   methods: {
     async openModal() {
-      this.token = await Cookie.get("token");
+      this.session = await JSON.parse(Cookie.dec(Cookie.get("myCookie")));
       this.refKabupaten = await getRef.Kabupaten();
       this.refKelamin = await getRef.Jenkel();
       this.refStatus = await getRef.Status();
@@ -355,7 +355,7 @@ export default {
       this.http
         .post(url, data, {
           headers: {
-            Authorization: "Bearer " + this.token,
+            Authorization: "Bearer " + this.session.token,
           },
         })
         .then((response) => {

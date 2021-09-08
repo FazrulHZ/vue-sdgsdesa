@@ -31,6 +31,9 @@ const routes = [
         {
           path: '/desa',
           name: 'Desa',
+          meta: {
+            superadmin: true
+          },
           component: () => import(/* webpackChunkName: "Desa" */ '../views/Desa.vue')
         },
         {
@@ -56,6 +59,9 @@ const routes = [
         {
           path: '/user',
           name: 'User',
+          meta: {
+            superadmin: true
+          },
           component: () => import(/* webpackChunkName: "User" */ '../views/User.vue')
         }
       ]
@@ -69,7 +75,7 @@ const router = new VueRouter({
 })
 
 router.beforeEach(async (to, from, next) => {
-  var myCookie = Cookie.get('session_ok');
+  var myCookie = Cookie.get('myCookie')
   if (to.matched.some(record => record.meta.requiresAuth)) {
     if (!myCookie) {
       next({
@@ -77,7 +83,16 @@ router.beforeEach(async (to, from, next) => {
         params: { nextUrl: to.fullPath }
       })
     } else {
-      next()
+      const session = JSON.parse(Cookie.dec(Cookie.get('myCookie')))
+      if (to.matched.some(record => record.meta.superadmin)) {
+        if (session.user_lvl === "1") {
+          next()
+        } else {
+          next({ name: 'Home' })
+        }
+      } else {
+        next()
+      }
     }
   } else {
     next()
