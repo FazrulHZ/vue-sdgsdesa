@@ -10,9 +10,14 @@ export default new Vuex.Store({
             user_id: "",
             user_ktp: "",
             user_nama: "",
+            user_name: "",
             user_tlp: "",
             user_alamat: "",
             user_foto: "",
+            user_lvl: "",
+            kabupaten_id: "",
+            kecamatan_id: "",
+            desa_id: "",
             created_at: ""
         }
     },

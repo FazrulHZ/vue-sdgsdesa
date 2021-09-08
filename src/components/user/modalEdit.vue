@@ -139,7 +139,7 @@
 
           <v-row>
             <!-- User Level -->
-            <v-col cols="12">
+            <v-col cols="12" class="mb-n8">
               <span class="subtitle-2">User Level</span>
               <v-select
                 dense
@@ -152,6 +152,53 @@
                 v-model="editedItem.user_lvl"
                 autocomplete="off"
               ></v-select>
+            </v-col>
+          </v-row>
+
+          <v-row>
+            <!-- Kabupaten / Kota -->
+            <v-col cols="12" md="4" class="mb-n8">
+              <span class="subtitle-2">Kabupaten / Kota</span>
+              <v-autocomplete
+                dense
+                flat
+                outlined
+                class="mt-2"
+                :items="refKabupaten"
+                item-text="kabupaten_nama"
+                item-value="kabupaten_id"
+                v-model="editedItem.kabupaten_id"
+              ></v-autocomplete>
+            </v-col>
+
+            <!-- Kecamatan -->
+            <v-col cols="12" md="4" class="mb-n8">
+              <span class="subtitle-2">Kecamatan</span>
+              <v-autocomplete
+                dense
+                flat
+                outlined
+                class="mt-2"
+                :items="refKecamatan"
+                item-text="kecamatan_nama"
+                item-value="kecamatan_id"
+                v-model="editedItem.kecamatan_id"
+              ></v-autocomplete>
+            </v-col>
+
+            <!-- Desa -->
+            <v-col cols="12" md="4">
+              <span class="subtitle-2">Desa</span>
+              <v-autocomplete
+                dense
+                flat
+                outlined
+                class="mt-2"
+                :items="refDesa"
+                item-text="desa_nama"
+                item-value="desa_id"
+                v-model="editedItem.desa_id"
+              ></v-autocomplete>
             </v-col>
           </v-row>
 
@@ -194,12 +241,33 @@ export default {
         console.log(value);
       },
     },
+
+    watchKabupaten: {
+      get() {
+        return modalEdit.state.user.kabupaten_id;
+      },
+    },
+
+    watchKecamatan: {
+      get() {
+        return modalEdit.state.user.kecamatan_id;
+      },
+    },
   },
 
   watch: {
     async modalEdit() {
       this.token = await Cookie.get("token");
       this.refUserlvl = await getRef.Userlvl();
+      this.refKabupaten = await getRef.Kabupaten();
+    },
+
+    async watchKabupaten() {
+      this.refKecamatan = await getRef.Kecamatan(this.editedItem.kabupaten_id);
+    },
+
+    async watchKecamatan() {
+      this.refDesa = await getRef.Desa(this.editedItem.kecamatan_id);
     },
   },
 
@@ -218,6 +286,9 @@ export default {
     show: false,
 
     refUserlvl: [],
+    refKabupaten: [],
+    refKecamatan: [],
+    refDesa: [],
 
     user_password: "",
     user_foto: "",
@@ -239,11 +310,16 @@ export default {
       const data = new FormData();
       data.append("user_id", this.editedItem.user_id);
       data.append("user_ktp", this.editedItem.user_ktp);
-      data.append("user_password", this.user_password);
       data.append("user_nama", this.editedItem.user_nama);
+      data.append("user_name", this.editedItem.user_name);
+      data.append("user_password", this.user_password);
       data.append("user_tlp", this.editedItem.user_tlp);
       data.append("user_alamat", this.editedItem.user_alamat);
       data.append("user_foto", this.user_foto);
+      data.append("user_lvl", this.editedItem.user_lvl);
+      data.append("kabupaten_id", this.editedItem.kabupaten_id);
+      data.append("kecamatan_id", this.editedItem.kecamatan_id);
+      data.append("desa_id", this.editedItem.desa_id);
 
       const url = process.env.VUE_APP_API_BASE + "user";
       this.http

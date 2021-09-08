@@ -151,7 +151,7 @@
 
           <v-row>
             <!-- User Level -->
-            <v-col cols="12">
+            <v-col cols="12" class="mb-n8">
               <span class="subtitle-2">User Level</span>
               <v-select
                 dense
@@ -164,6 +164,57 @@
                 v-model="user_lvl"
                 autocomplete="off"
               ></v-select>
+            </v-col>
+          </v-row>
+
+          <v-row>
+            <!-- Kabupaten / Kota -->
+            <v-col cols="12" md="4" class="mb-n8">
+              <span class="subtitle-2">Kabupaten / Kota</span>
+              <v-autocomplete
+                dense
+                flat
+                outlined
+                class="mt-2"
+                :items="refKabupaten"
+                item-text="kabupaten_nama"
+                item-value="kabupaten_id"
+                v-model="kabupaten"
+                return-object
+                @change="selectKecamatan"
+              ></v-autocomplete>
+            </v-col>
+
+            <!-- Kecamatan -->
+            <v-col cols="12" md="4" class="mb-n8">
+              <span class="subtitle-2">Kecamatan</span>
+              <v-autocomplete
+                dense
+                flat
+                outlined
+                class="mt-2"
+                :items="refKecamatan"
+                item-text="kecamatan_nama"
+                item-value="kecamatan_id"
+                v-model="kecamatan"
+                return-object
+                @change="selectDesa"
+              ></v-autocomplete>
+            </v-col>
+
+            <!-- Desa -->
+            <v-col cols="12" md="4">
+              <span class="subtitle-2">Desa</span>
+              <v-autocomplete
+                dense
+                flat
+                outlined
+                class="mt-2"
+                :items="refDesa"
+                item-text="desa_nama"
+                item-value="desa_id"
+                v-model="desa_id"
+              ></v-autocomplete>
             </v-col>
           </v-row>
 
@@ -193,6 +244,9 @@ export default {
     show: false,
 
     refUserlvl: [],
+    refKabupaten: [],
+    refKecamatan: [],
+    refDesa: [],
 
     user_ktp: "",
     user_nama: "",
@@ -202,6 +256,9 @@ export default {
     user_alamat: "",
     user_foto: "",
     user_lvl: "",
+    kabupaten: "",
+    kecamatan: "",
+    desa_id: "",
     urlImage: "",
   }),
 
@@ -209,7 +266,16 @@ export default {
     async openModal() {
       this.token = await Cookie.get("token");
       this.refUserlvl = await getRef.Userlvl();
+      this.refKabupaten = await getRef.Kabupaten();
       this.ModalAdd = true;
+    },
+    
+    async selectKecamatan(value) {
+      this.refKecamatan = await getRef.Kecamatan(value.kabupaten_id);
+    },
+    
+    async selectDesa(value) {
+      this.refDesa = await getRef.Desa(value.kecamatan_id);
     },
 
     async add() {
@@ -224,6 +290,9 @@ export default {
       data.append("user_alamat", this.user_alamat);
       data.append("user_foto", this.user_foto);
       data.append("user_lvl", this.user_lvl);
+      data.append("kabupaten_id", this.kabupaten.kabupaten_id);
+      data.append("kecamatan_id", this.kecamatan.kecamatan_id);
+      data.append("desa_id", this.desa_id);
 
       const url = process.env.VUE_APP_API_BASE + "user";
       this.http

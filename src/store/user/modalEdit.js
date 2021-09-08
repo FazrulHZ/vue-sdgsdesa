@@ -15,6 +15,9 @@ export default new Vuex.Store({
             user_alamat: "",
             user_foto: "",
             user_lvl: "",
+            kabupaten_id: "",
+            kecamatan_id: "",
+            desa_id: "",
             created_at: ""
         }
     },
