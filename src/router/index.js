@@ -71,6 +71,11 @@ const routes = [
             superadmin: true
           },
           component: () => import(/* webpackChunkName: "User" */ '../views/User.vue')
+        },
+        {
+          path: '/profiluser',
+          name: 'ProfilUser',
+          component: () => import(/* webpackChunkName: "User" */ '../views/Profiluser.vue')
         }
       ]
   }

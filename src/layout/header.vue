@@ -24,7 +24,7 @@
               <h4>{{ user_nama }}</h4>
             </div>
             <v-divider></v-divider>
-            <v-btn depressed text block>
+            <v-btn depressed text @click="profil()" block>
               Profil
             </v-btn>
             <v-divider></v-divider>
@@ -72,7 +72,11 @@ export default {
 
     logOut() {
       Cookie.delete();
-      this.$router.push("/login");
+      this.$router.push("/login").catch(() => {});
+    },
+
+    profil() {
+      this.$router.push("/profiluser").catch(() => {});
     },
   },
 };

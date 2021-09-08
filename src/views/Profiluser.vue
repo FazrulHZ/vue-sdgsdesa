@@ -3,7 +3,7 @@
     <div>
       <v-card outlined class="py-3 px-5 mb-5 elevation-2">
         <v-row no-gutters>
-          <h3 class="my-auto">Profil Desa</h3>
+          <h3 class="my-auto">Profil</h3>
           <v-spacer></v-spacer>
           <v-tooltip bottom>
             <template v-slot:activator="{ on, attrs }">
@@ -29,10 +29,10 @@
     <div>
       <v-row>
         <v-col cols="12" md="4">
-          <div class="mt-2">
-            <v-card>
+          <div class="mt-2 text-center">
+            <v-avatar size="250">
               <v-img :src="urlImage" class="mx-auto"></v-img>
-            </v-card>
+            </v-avatar>
           </div>
         </v-col>
 
@@ -41,8 +41,136 @@
             <v-form ref="form">
               <div class="mx-7 mt-5">
                 <v-row>
-                  <!-- Kabupaten / Kota -->
+                  <!-- NIK User -->
+                  <v-col cols="12" md="12" class="mb-n8">
+                    <span class="subtitle-2">NIK</span>
+                    <v-text-field
+                      dense
+                      flat
+                      outlined
+                      class="mt-2"
+                      v-model="user.user_ktp"
+                      :readonly="allowEdit"
+                    ></v-text-field>
+                  </v-col>
+                </v-row>
+
+                <v-row>
+                  <!-- Nama User -->
+                  <v-col cols="12" md="4" class="mb-n8">
+                    <span class="subtitle-2">Nama User</span>
+                    <v-text-field
+                      dense
+                      flat
+                      outlined
+                      class="mt-2"
+                      v-model="user.user_name"
+                      :readonly="allowEdit"
+                      autocomplete="off"
+                    ></v-text-field>
+                  </v-col>
+
+                  <!-- Nama -->
+                  <v-col cols="12" md="8" class="mb-n8">
+                    <span class="subtitle-2">Nama</span>
+                    <v-text-field
+                      dense
+                      flat
+                      outlined
+                      class="mt-2"
+                      v-model="user.user_nama"
+                      :readonly="allowEdit"
+                    ></v-text-field>
+                  </v-col>
+                </v-row>
+
+                <v-row v-if="!allowEdit">
+                  <!-- Password User -->
+                  <v-col cols="12" class="mb-n8">
+                    <span class="subtitle-2">Password User</span>
+                    <v-text-field
+                      dense
+                      flat
+                      outlined
+                      v-model="user_password"
+                      :append-icon="show ? 'mdi-eye' : 'mdi-eye-off'"
+                      :type="show ? 'text' : 'password'"
+                      class="mt-2 input-group--focused"
+                      @click:append="show = !show"
+                    ></v-text-field>
+                  </v-col>
+                </v-row>
+
+                <v-row>
+                  <!-- Alamat -->
+                  <v-col cols="12" class="mb-n8">
+                    <span class="subtitle-2">Alamat</span>
+                    <v-textarea
+                      dense
+                      flat
+                      outlined
+                      class="mt-2"
+                      v-model="user.user_alamat"
+                      :readonly="allowEdit"
+                    ></v-textarea>
+                  </v-col>
+                </v-row>
+
+                <v-row>
+                  <!-- Nomor Telpon -->
                   <v-col cols="12" md="6" class="mb-n8">
+                    <span class="subtitle-2">Nomor Telpon</span>
+                    <v-text-field
+                      dense
+                      flat
+                      outlined
+                      class="mt-2"
+                      v-model="user.user_tlp"
+                      append-icon="mdi-phone"
+                      :readonly="allowEdit"
+                    ></v-text-field>
+                  </v-col>
+                </v-row>
+
+                <v-row v-if="!allowEdit">
+                  <!-- Foto -->
+                  <v-col cols="12" class="mb-n8">
+                    <span class="subtitle-2">Unggah Foto Baru</span>
+                    <v-file-input
+                      dense
+                      flat
+                      outlined
+                      prepend-icon
+                      accept="image/png, image/jpeg, image/bmp"
+                      placeholder="Pilih Foto user"
+                      append-icon="mdi-camera"
+                      @change="onFile"
+                      ref="avatar"
+                    ></v-file-input>
+                  </v-col>
+                </v-row>
+
+                <v-row>
+                  <!-- User Level -->
+                  <v-col cols="12" class="mb-n8">
+                    <span class="subtitle-2">User Level</span>
+                    <v-select
+                      dense
+                      flat
+                      outlined
+                      class="mt-2"
+                      :items="refUserlvl"
+                      item-value="id"
+                      item-text="nama"
+                      v-model="user.user_lvl"
+                      :readonly="allowEdit"
+                    ></v-select>
+                  </v-col>
+                </v-row>
+
+                <v-row>
+                  <!-- Kabupaten / Kota -->
+                  <v-col cols="12" md="4" class="mb-n8 mb-md-0">
                     <span class="subtitle-2">Kabupaten / Kota</span>
                     <v-autocomplete
                       dense
@@ -52,15 +180,13 @@
                       :items="refKabupaten"
                       item-text="kabupaten_nama"
                       item-value="kabupaten_id"
-                      v-model="desa.kabupaten_id"
-                      return-object
-                      @change="selectKecamatan"
+                      v-model="user.kabupaten_id"
                       :readonly="allowEdit"
                     ></v-autocomplete>
                   </v-col>
 
                   <!-- Kecamatan -->
-                  <v-col cols="12" md="6" class="mb-n8">
+                  <v-col cols="12" md="4" class="mb-n8 mb-md-0">
                     <span class="subtitle-2">Kecamatan</span>
                     <v-autocomplete
                       dense
@@ -70,149 +196,25 @@
                       :items="refKecamatan"
                       item-text="kecamatan_nama"
                       item-value="kecamatan_id"
-                      v-model="desa.kecamatan_id"
+                      v-model="user.kecamatan_id"
                       :readonly="allowEdit"
                     ></v-autocomplete>
                   </v-col>
-                </v-row>
 
-                <v-row>
-                  <!-- Nama Desa -->
-                  <v-col cols="12" class="mb-n8">
-                    <span class="subtitle-2">Nama Desa</span>
-                    <v-text-field
+                  <!-- Desa -->
+                  <v-col cols="12" md="4">
+                    <span class="subtitle-2">Desa</span>
+                    <v-autocomplete
                       dense
                       flat
                       outlined
                       class="mt-2"
-                      v-model="desa.desa_nama"
+                      :items="refDesa"
+                      item-text="desa_nama"
+                      item-value="desa_id"
+                      v-model="user.desa_id"
                       :readonly="allowEdit"
-                    ></v-text-field>
-                  </v-col>
-                </v-row>
-
-                <v-row>
-                  <!-- Email Desa -->
-                  <v-col cols="12" md="7" class="mb-n8">
-                    <span class="subtitle-2">Email Desa</span>
-                    <v-text-field
-                      dense
-                      flat
-                      outlined
-                      class="mt-2"
-                      v-model="desa.desa_email"
-                      :readonly="allowEdit"
-                      append-icon="mdi-email"
-                    ></v-text-field>
-                  </v-col>
-
-                  <!-- Website Desa -->
-                  <v-col cols="12" md="5" class="mb-n8">
-                    <span class="subtitle-2">Website Desa</span>
-                    <v-text-field
-                      dense
-                      flat
-                      outlined
-                      class="mt-2"
-                      v-model="desa.desa_web"
-                      :readonly="allowEdit"
-                      append-icon="mdi-web"
-                    ></v-text-field>
-                  </v-col>
-                </v-row>
-
-                <v-row>
-                  <!-- Facebook Desa -->
-                  <v-col cols="12" md="3" class="mb-n8">
-                    <span class="subtitle-2">Facebook Desa</span>
-                    <v-text-field
-                      dense
-                      flat
-                      outlined
-                      class="mt-2"
-                      v-model="desa.desa_fb"
-                      :readonly="allowEdit"
-                      append-icon="mdi-facebook"
-                      placeholder="Masukan url"
-                    ></v-text-field>
-                  </v-col>
-
-                  <!-- Twitter Desa -->
-                  <v-col cols="12" md="3" class="mb-n8">
-                    <span class="subtitle-2">Twitter Desa</span>
-                    <v-text-field
-                      dense
-                      flat
-                      outlined
-                      class="mt-2"
-                      v-model="desa.desa_twitter"
-                      :readonly="allowEdit"
-                      append-icon="mdi-twitter"
-                      placeholder="Masukan url"
-                    ></v-text-field>
-                  </v-col>
-
-                  <!-- Instagram Desa -->
-                  <v-col cols="12" md="3" class="mb-n8">
-                    <span class="subtitle-2">Instagram Desa</span>
-                    <v-text-field
-                      dense
-                      flat
-                      outlined
-                      class="mt-2"
-                      v-model="desa.desa_ig"
-                      :readonly="allowEdit"
-                      append-icon="mdi-instagram"
-                      placeholder="Masukan url"
-                    ></v-text-field>
-                  </v-col>
-
-                  <!-- Youtube Desa -->
-                  <v-col cols="12" md="3" class="mb-n8">
-                    <span class="subtitle-2">Youtube Desa</span>
-                    <v-text-field
-                      dense
-                      flat
-                      outlined
-                      class="mt-2"
-                      v-model="desa.desa_yt"
-                      :readonly="allowEdit"
-                      append-icon="mdi-youtube"
-                      placeholder="Masukan url"
-                    ></v-text-field>
-                  </v-col>
-                </v-row>
-
-                <v-row>
-                  <!-- Status Pemerintahan -->
-                  <v-col cols="12">
-                    <span class="subtitle-2">Status Pemerintahan</span>
-                    <v-text-field
-                      dense
-                      flat
-                      outlined
-                      class="mt-2"
-                      v-model="desa.desa_status_pemerintahan"
-                      :readonly="allowEdit"
-                    ></v-text-field>
-                  </v-col>
-                </v-row>
-
-                <v-row v-if="!allowEdit">
-                  <!-- Foto -->
-                  <v-col cols="12">
-                    <span class="subtitle-2">Foto</span>
-                    <v-file-input
-                      dense
-                      flat
-                      outlined
-                      prepend-icon
-                      accept="image/png, image/jpeg, image/bmp"
-                      placeholder="Pilih Foto desa"
-                      append-icon="mdi-camera"
-                      @change="onFile"
-                      ref="avatar"
-                    ></v-file-input>
+                    ></v-autocomplete>
                   </v-col>
                 </v-row>
 
@@ -246,7 +248,8 @@
 <script>
 import Cookie from "@/helper/cookie.js";
 import getRef from "@/helper/getRef.js";
-import refreshView from "@/store/desa/viewDesa";
+
+import refreshView from "@/store/user/viewUser";
 
 export default {
   computed: {
@@ -303,44 +306,50 @@ export default {
   data: () => ({
     session: "",
     btnLoading: true,
+    show: false,
     allowEdit: true,
 
+    refUserlvl: [],
     refKabupaten: [],
     refKecamatan: [],
+    refDesa: [],
 
-    desa: {},
+    user: {},
 
-    desa_foto: "",
+    user_password: "",
+    user_foto: "",
     urlImage: "",
   }),
 
   async mounted() {
     this.session = await JSON.parse(Cookie.dec(Cookie.get("myCookie")));
     this.refKabupaten = await getRef.Kabupaten();
+    this.refUserlvl = await getRef.Userlvl();
     this.getData();
   },
 
   methods: {
     getIMG(value) {
       if (value) {
-        return process.env.VUE_APP_API_BASE + "upload/desaGambar/" + value;
+        return process.env.VUE_APP_API_BASE + "upload/userGambar/" + value;
       } else {
-        return process.env.VUE_APP_API_BASE + "upload/default.jpg";
+        return process.env.VUE_APP_API_BASE + "upload/userDefault.png";
       }
     },
 
     getData() {
       this.http
-        .get(process.env.VUE_APP_API_BASE + "desainfo/profil", {
+        .get(process.env.VUE_APP_API_BASE + "user/profil", {
           headers: {
             Authorization: "Bearer " + this.session.token,
           },
         })
         .then(async (res) => {
           refreshView.commit("refreshData", false);
-          this.desa = res.data.data;
-          this.refKecamatan = await getRef.Kecamatan(this.desa.kabupaten_id);
-          this.urlImage = this.getIMG(this.desa.desa_foto);
+          this.user = res.data.data;
+          this.refKecamatan = await getRef.Kecamatan(this.user.kabupaten_id);
+          this.refDesa = await getRef.Desa(this.user.kecamatan_id);
+          this.urlImage = this.getIMG(this.user.user_foto);
         })
         .catch((err) => {
           console.log(err);
@@ -352,8 +361,8 @@ export default {
     },
 
     onFile(value) {
-      this.desa_foto = value;
-      this.urlImage = URL.createObjectURL(this.desa_foto);
+      this.user_foto = value;
+      this.urlImage = URL.createObjectURL(this.user_foto);
     },
 
     edit() {
@@ -368,21 +377,20 @@ export default {
       this.btnLoading = false;
 
       const data = new FormData();
-      data.append("desa_id", this.desa.desa_id);
-      data.append("desa_nama", this.desa.desa_nama);
-      data.append("desa_email", this.desa.desa_email);
-      data.append("desa_web", this.desa.desa_web);
-      data.append("desa_fb", this.desa.desa_fb);
-      data.append("desa_twitter", this.desa.desa_twitter);
-      data.append("desa_ig", this.desa.desa_ig);
-      data.append("desa_yt", this.desa.desa_yt);
-      data.append(
-        "desa_status_pemerintahan",
-        this.desa.desa_status_pemerintahan
-      );
-      data.append("desa_foto", this.desa_foto);
+      data.append("user_id", this.user.user_id);
+      data.append("user_ktp", this.user.user_ktp);
+      data.append("user_nama", this.user.user_nama);
+      data.append("user_name", this.user.user_name);
+      data.append("user_password", this.user_password);
+      data.append("user_tlp", this.user.user_tlp);
+      data.append("user_alamat", this.user.user_alamat);
+      data.append("user_foto", this.user_foto);
+      data.append("user_lvl", this.user.user_lvl);
+      data.append("kabupaten_id", this.user.kabupaten_id);
+      data.append("kecamatan_id", this.user.kecamatan_id);
+      data.append("desa_id", this.user.desa_id);
 
-      const url = process.env.VUE_APP_API_BASE + "desainfo/profil";
+      const url = process.env.VUE_APP_API_BASE + "user/profil";
       this.http
         .put(url, data, {
           headers: {
