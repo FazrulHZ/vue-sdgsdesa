@@ -37,6 +37,14 @@ const routes = [
           component: () => import(/* webpackChunkName: "Desa" */ '../views/Desa.vue')
         },
         {
+          path: '/profildesa',
+          name: 'Desa',
+          meta: {
+            adminDesa: true
+          },
+          component: () => import(/* webpackChunkName: "Profil Desa" */ '../views/Profildesa.vue')
+        },
+        {
           path: '/rt',
           name: 'Rt',
           component: () => import(/* webpackChunkName: "TR/RW" */ '../views/Rt.vue')
@@ -86,6 +94,12 @@ router.beforeEach(async (to, from, next) => {
       const session = JSON.parse(Cookie.dec(Cookie.get('myCookie')))
       if (to.matched.some(record => record.meta.superadmin)) {
         if (session.user_lvl === "1") {
+          next()
+        } else {
+          next({ name: 'Home' })
+        }
+      } else if (to.matched.some(record => record.meta.adminDesa)) {
+        if (session.user_lvl !== "1") {
           next()
         } else {
           next({ name: 'Home' })

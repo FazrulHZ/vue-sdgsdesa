@@ -26,6 +26,13 @@
           <v-list-item-title>Survei Desa</v-list-item-title>
         </v-list-item>
 
+        <v-list-item :to="'/profildesa'" v-else>
+          <v-list-item-icon>
+            <v-icon>mdi-folder-home-outline</v-icon>
+          </v-list-item-icon>
+          <v-list-item-title>Profil Desa</v-list-item-title>
+        </v-list-item>
+
         <v-list-item :to="'/rt'">
           <v-list-item-icon>
             <v-icon>mdi-home-city-outline</v-icon>

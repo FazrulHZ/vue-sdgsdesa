@@ -121,6 +121,7 @@
                 class="mt-2"
                 v-model="desa_fb"
                 append-icon="mdi-facebook"
+                placeholder="Masukan url"
               ></v-text-field>
             </v-col>
 
@@ -134,6 +135,7 @@
                 class="mt-2"
                 v-model="desa_twitter"
                 append-icon="mdi-twitter"
+                placeholder="Masukan url"
               ></v-text-field>
             </v-col>
 
@@ -147,6 +149,7 @@
                 class="mt-2"
                 v-model="desa_ig"
                 append-icon="mdi-instagram"
+                placeholder="Masukan url"
               ></v-text-field>
             </v-col>
 
@@ -160,6 +163,7 @@
                 class="mt-2"
                 v-model="desa_yt"
                 append-icon="mdi-youtube"
+                placeholder="Masukan url"
               ></v-text-field>
             </v-col>
           </v-row>
