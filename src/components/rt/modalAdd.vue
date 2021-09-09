@@ -36,7 +36,7 @@
         <div class="mx-7 mt-5">
           <v-row>
             <!-- Kabupaten / Kota -->
-            <v-col cols="12" md="4" class="mb-n8">
+            <v-col cols="12" md="4" class="mb-n8" v-if="session.user_lvl === 1">
               <span class="subtitle-2">Kabupaten / Kota</span>
               <v-autocomplete
                 dense
@@ -49,11 +49,12 @@
                 v-model="kabupaten"
                 return-object
                 @change="selectKecamatan"
+                autocomplete="off"
               ></v-autocomplete>
             </v-col>
 
             <!-- Kecamatan -->
-            <v-col cols="12" md="4" class="mb-n8">
+            <v-col cols="12" md="4" class="mb-n8" v-if="session.user_lvl === 1">
               <span class="subtitle-2">Kecamatan</span>
               <v-autocomplete
                 dense
@@ -66,11 +67,12 @@
                 v-model="kecamatan"
                 return-object
                 @change="selectDesa"
+                autocomplete="off"
               ></v-autocomplete>
             </v-col>
 
             <!-- Desa -->
-            <v-col cols="12" md="4" class="mb-n8">
+            <v-col cols="12" md="4" class="mb-n8" v-if="session.user_lvl === 1">
               <span class="subtitle-2">Desa</span>
               <v-autocomplete
                 dense
@@ -81,6 +83,7 @@
                 item-text="desa_nama"
                 item-value="desa_id"
                 v-model="desa_id"
+                autocomplete="off"
               ></v-autocomplete>
             </v-col>
           </v-row>
@@ -97,6 +100,7 @@
                 class="mt-2"
                 :rules="rt_namaRules"
                 v-model="rt_nama"
+                autocomplete="off"
               ></v-text-field>
             </v-col>
 
@@ -109,6 +113,7 @@
                 outlined
                 class="mt-2"
                 v-model="rt_ketua"
+                autocomplete="off"
               ></v-text-field>
             </v-col>
           </v-row>
@@ -123,6 +128,7 @@
                 outlined
                 class="mt-2"
                 v-model="rt_alamat"
+                autocomplete="off"
               ></v-textarea>
             </v-col>
           </v-row>
@@ -138,6 +144,7 @@
                 class="mt-2"
                 append-icon="mdi-phone"
                 v-model="rt_tlp"
+                autocomplete="off"
               ></v-text-field>
             </v-col>
 
@@ -150,6 +157,7 @@
                 outlined
                 class="mt-2"
                 v-model="rt_topografi"
+                autocomplete="off"
               ></v-text-field>
             </v-col>
 
@@ -163,6 +171,7 @@
                 class="mt-2"
                 append-icon="mdi-account-group"
                 v-model="rt_jumlah_warga"
+                autocomplete="off"
               ></v-text-field>
             </v-col>
           </v-row>
