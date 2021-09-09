@@ -36,7 +36,12 @@
         <div class="mx-7 mt-5">
           <v-row>
             <!-- Kabupaten / Kota -->
-            <v-col cols="12" md="3" class="mb-n8">
+            <v-col
+              cols="12"
+              md="3"
+              class="mb-n8"
+              v-if="session.user_lvl === '1'"
+            >
               <span class="subtitle-2">Kabupaten / Kota</span>
               <v-autocomplete
                 dense
@@ -53,7 +58,12 @@
             </v-col>
 
             <!-- Kecamatan -->
-            <v-col cols="12" md="3" class="mb-n8">
+            <v-col
+              cols="12"
+              md="3"
+              class="mb-n8"
+              v-if="session.user_lvl === '1'"
+            >
               <span class="subtitle-2">Kecamatan</span>
               <v-autocomplete
                 dense
@@ -70,7 +80,12 @@
             </v-col>
 
             <!-- Desa -->
-            <v-col cols="12" md="3" class="mb-n8">
+            <v-col
+              cols="12"
+              md="3"
+              class="mb-n8"
+              v-if="session.user_lvl === '1'"
+            >
               <span class="subtitle-2">Desa</span>
               <v-autocomplete
                 dense
@@ -112,6 +127,7 @@
                 outlined
                 class="mt-2"
                 v-model="kk_no"
+                autocomplete="off"
               ></v-text-field>
             </v-col>
           </v-row>
@@ -126,6 +142,7 @@
                 outlined
                 class="mt-2"
                 v-model="kk_nik"
+                autocomplete="off"
               ></v-text-field>
             </v-col>
 
@@ -138,6 +155,7 @@
                 outlined
                 class="mt-2"
                 v-model="kk_nama"
+                autocomplete="off"
               ></v-text-field>
             </v-col>
 
@@ -151,6 +169,7 @@
                 class="mt-2"
                 append-icon="mdi-phone"
                 v-model="kk_tlp"
+                autocomplete="off"
               ></v-text-field>
             </v-col>
           </v-row>
@@ -165,6 +184,7 @@
                 outlined
                 class="mt-2"
                 v-model="kk_alamat"
+                autocomplete="off"
               ></v-textarea>
             </v-col>
           </v-row>
@@ -179,6 +199,7 @@
                 outlined
                 class="mt-2"
                 v-model="kk_lahan"
+                autocomplete="off"
               ></v-text-field>
             </v-col>
 
@@ -191,6 +212,7 @@
                 outlined
                 class="mt-2"
                 v-model="kk_tanah"
+                autocomplete="off"
               ></v-text-field>
             </v-col>
 
@@ -203,6 +225,7 @@
                 outlined
                 class="mt-2"
                 v-model="kk_lantai"
+                autocomplete="off"
               ></v-text-field>
             </v-col>
           </v-row>
@@ -227,6 +250,28 @@ import refreshView from "@/store/kk/viewKk";
 import getRef from "@/helper/getRef.js";
 
 export default {
+  watch: {
+    async kabupaten() {
+      if (this.session.user_lvl !== "1") {
+        this.refKecamatan = await getRef.Kecamatan(this.session.kabupaten_id);
+        this.kecamatan = this.session.kecamatan_id;
+      }
+    },
+
+    async kecamatan() {
+      if (this.session.user_lvl !== "1") {
+        this.refDesa = await getRef.Desa(this.session.kecamatan_id);
+        this.desa = this.session.desa_id;
+      }
+    },
+
+    async desa() {
+      if (this.session.user_lvl !== "1") {
+        this.refRt = await getRef.RT(this.session.desa_id);
+      }
+    },
+  },
+
   data: () => ({
     session: "",
     ModalAdd: false,
@@ -255,6 +300,9 @@ export default {
     async openModal() {
       this.session = await JSON.parse(Cookie.dec(Cookie.get("myCookie")));
       this.refKabupaten = await getRef.Kabupaten();
+      if (this.session.user_lvl !== "1") {
+        this.kabupaten = this.session.kabupaten_id;
+      }
       this.ModalAdd = true;
     },
 

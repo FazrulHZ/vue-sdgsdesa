@@ -36,7 +36,12 @@
         <div class="mx-7 mt-5">
           <v-row>
             <!-- Kabupaten / Kota -->
-            <v-col cols="12" md="3" class="mb-n8">
+            <v-col
+              cols="12"
+              md="3"
+              class="mb-n8"
+              v-if="session.user_lvl === '1'"
+            >
               <span class="subtitle-2">Kabupaten / Kota</span>
               <v-autocomplete
                 dense
@@ -53,7 +58,12 @@
             </v-col>
 
             <!-- Kecamatan -->
-            <v-col cols="12" md="3" class="mb-n8">
+            <v-col
+              cols="12"
+              md="3"
+              class="mb-n8"
+              v-if="session.user_lvl === '1'"
+            >
               <span class="subtitle-2">Kecamatan</span>
               <v-autocomplete
                 dense
@@ -70,7 +80,12 @@
             </v-col>
 
             <!-- Desa -->
-            <v-col cols="12" md="3" class="mb-n8">
+            <v-col
+              cols="12"
+              md="3"
+              class="mb-n8"
+              v-if="session.user_lvl === '1'"
+            >
               <span class="subtitle-2">Desa</span>
               <v-autocomplete
                 dense
@@ -112,6 +127,7 @@
                 outlined
                 class="mt-2"
                 v-model="penduduk_nik"
+                autocomplete="off"
               ></v-text-field>
             </v-col>
 
@@ -124,6 +140,7 @@
                 outlined
                 class="mt-2"
                 v-model="penduduk_nama"
+                autocomplete="off"
               ></v-text-field>
             </v-col>
 
@@ -136,6 +153,7 @@
                 outlined
                 class="mt-2"
                 v-model="penduduk_umur"
+                autocomplete="off"
               ></v-text-field>
             </v-col>
           </v-row>
@@ -150,6 +168,7 @@
                 outlined
                 class="mt-2"
                 v-model="penduduk_tempatlahir"
+                autocomplete="off"
               ></v-text-field>
             </v-col>
 
@@ -235,6 +254,7 @@
                 outlined
                 class="mt-2"
                 v-model="penduduk_suku"
+                autocomplete="off"
               ></v-text-field>
             </v-col>
 
@@ -289,6 +309,28 @@ import refreshView from "@/store/penduduk/viewPenduduk";
 import getRef from "@/helper/getRef.js";
 
 export default {
+  watch: {
+    async kabupaten() {
+      if (this.session.user_lvl !== "1") {
+        this.refKecamatan = await getRef.Kecamatan(this.session.kabupaten_id);
+        this.kecamatan = this.session.kecamatan_id;
+      }
+    },
+
+    async kecamatan() {
+      if (this.session.user_lvl !== "1") {
+        this.refDesa = await getRef.Desa(this.session.kecamatan_id);
+        this.desa = this.session.desa_id;
+      }
+    },
+
+    async desa() {
+      if (this.session.user_lvl !== "1") {
+        this.refRt = await getRef.RT(this.session.desa_id);
+      }
+    },
+  },
+
   data: () => ({
     session: "",
     ModalAdd: false,
@@ -328,6 +370,9 @@ export default {
       this.refStatus = await getRef.Status();
       this.refAgama = await getRef.Agama();
       this.refWN = await getRef.WN();
+      if (this.session.user_lvl !== "1") {
+        this.kabupaten = this.session.kabupaten_id;
+      }
       this.ModalAdd = true;
     },
 

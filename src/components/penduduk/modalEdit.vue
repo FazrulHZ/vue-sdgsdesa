@@ -18,7 +18,13 @@
         <div class="mx-7 mt-5">
           <v-row>
             <!-- Kabupaten / Kota -->
-            <v-col cols="12" md="3" class="mb-n8">
+            <v-col
+              cols="12"
+              md="3"
+              class="mb-n8"
+              v-if="session.user_lvl === '1'"
+            
+            autocomplete="off">
               <span class="subtitle-2">Kabupaten / Kota</span>
               <v-autocomplete
                 dense
@@ -33,7 +39,13 @@
             </v-col>
 
             <!-- Kecamatan -->
-            <v-col cols="12" md="3" class="mb-n8">
+            <v-col
+              cols="12"
+              md="3"
+              class="mb-n8"
+              v-if="session.user_lvl === '1'"
+            
+            autocomplete="off">
               <span class="subtitle-2">Kecamatan</span>
               <v-autocomplete
                 dense
@@ -48,7 +60,13 @@
             </v-col>
 
             <!-- Desa -->
-            <v-col cols="12" md="3" class="mb-n8">
+            <v-col
+              cols="12"
+              md="3"
+              class="mb-n8"
+              v-if="session.user_lvl === '1'"
+            
+            autocomplete="off">
               <span class="subtitle-2">Desa</span>
               <v-autocomplete
                 dense
@@ -88,6 +106,7 @@
                 outlined
                 class="mt-2"
                 v-model="editedItem.penduduk_nik"
+                autocomplete="off"
               ></v-text-field>
             </v-col>
 
@@ -100,6 +119,7 @@
                 outlined
                 class="mt-2"
                 v-model="editedItem.penduduk_nama"
+                autocomplete="off"
               ></v-text-field>
             </v-col>
 
@@ -112,6 +132,7 @@
                 outlined
                 class="mt-2"
                 v-model="editedItem.penduduk_umur"
+                autocomplete="off"
               ></v-text-field>
             </v-col>
           </v-row>
@@ -126,6 +147,7 @@
                 outlined
                 class="mt-2"
                 v-model="editedItem.penduduk_tempatlahir"
+                autocomplete="off"
               ></v-text-field>
             </v-col>
 
@@ -217,6 +239,7 @@
                 outlined
                 class="mt-2"
                 v-model="editedItem.penduduk_suku"
+                autocomplete="off"
               ></v-text-field>
             </v-col>
 
