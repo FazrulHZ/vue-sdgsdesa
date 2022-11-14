@@ -4,8 +4,9 @@
       <v-img
         src="@/assets/img/teluk-tomini-web-2.png"
         max-height="100vh"
+        class="hidden-sm-and-down"
       ></v-img>
-      <v-col cols="6" class="pa-10 my-auto">
+      <v-col cols="12" md="6" class="pa-10 my-auto">
         <div class="ma-3">
           <div class="mb-4">
             <v-row class="justify-center">
