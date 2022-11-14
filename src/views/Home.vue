@@ -9,7 +9,7 @@
         class="px-5"
       >
         <v-row>
-          <v-col cols="4" md="2">
+          <v-col cols="4" md="1">
             <v-row class="pa-2 justify-center">
               <v-img
                 src="@/assets/img/ung-logo.png"
@@ -17,16 +17,16 @@
                 max-height="60"
                 class="mr-2"
               ></v-img>
-              <v-img
+              <!-- <v-img
                 src="@/assets/img/sdgs-logo.png"
                 max-width="55"
                 max-height="55"
                 class="my-auto"
-              ></v-img>
+              ></v-img> -->
             </v-row>
           </v-col>
-          <v-col cols="8" md="6" class="my-auto">
-            <h3>DARI UNIVERSITAS NEGERI GORONTALO, UNTUK DESA</h3>
+          <v-col cols="8" md="11" class="my-auto">
+            <h3>DARI UNIVERSITAS NEGERI GORONTALO, UNTUK TELUK TOMINI</h3>
           </v-col>
         </v-row>
       </v-alert>

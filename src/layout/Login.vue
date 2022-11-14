@@ -1,5 +1,5 @@
 <template>
-  <v-container fill-height fluid style="background: #F5F5F5;">
+  <v-container fill-height fluid style="background: #f5f5f5">
     <v-row align="center" justify="center">
       <v-col cols="12" md="6" class="hidden-sm-and-down pa-6">
         <v-img src="@/assets/img/login.svg"></v-img>
@@ -8,13 +8,7 @@
         <v-card elevation="15">
           <v-card-text>
             <div class="ma-3">
-              <p class="text-center" style="font-size:35px; color: #800000">
-                <span class="font-weight-thin">SDGs</span>-<span>Desa</span>
-              </p>
-              <div class="text-center">
-                Dari UNG, Untuk Desa
-              </div>
-              <div class="my-5">
+              <div class="mb-6">
                 <v-row class="justify-center">
                   <v-img
                     src="@/assets/img/ung-logo.png"
@@ -22,13 +16,18 @@
                     max-height="50"
                     class="mr-1"
                   ></v-img>
-                  <v-img
+                  <!-- <v-img
                     src="@/assets/img/sdgs-logo.png"
                     max-width="45"
                     max-height="45"
                     class="my-auto"
-                  ></v-img>
+                  ></v-img> -->
                 </v-row>
+              </div>
+
+              <div class="text-center" style="font-size: 35px; color: #800000">
+                <div class="mb-4">OPEN DATA</div>
+                <div class="font-weight-thin">TELUK TOMINI</div>
               </div>
             </div>
             <v-divider></v-divider>

@@ -2,11 +2,15 @@
   <v-navigation-drawer v-model="drawer" app>
     <v-list dense>
       <v-list-item-group active-class="utama--text text--accent-4">
-        <v-list-item class="py-2">
-          <v-list-item-title class="text-center">
-            <h2 class="utama--text">
-              SDGs Desa
-            </h2>
+        <v-list-item class="py-2" disabled>
+          <v-list-item-icon>
+            <v-icon color="utama">mdi-database-settings</v-icon>
+          </v-list-item-icon>
+          <v-list-item-title class="utama--text">
+            beta
+            <div style="font-size: large" class="font-weight-black">
+              Open Data
+            </div>
           </v-list-item-title>
         </v-list-item>
 
