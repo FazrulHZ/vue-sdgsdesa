@@ -2,7 +2,7 @@
   <v-app-bar color="utama" dark app>
     <v-app-bar-nav-icon @click="toggleDrawer()"></v-app-bar-nav-icon>
 
-    <v-toolbar-title>TELUK TOMINI</v-toolbar-title>
+    <v-toolbar-title>{{ title.toUpperCase() }}</v-toolbar-title>
 
     <v-spacer></v-spacer>
 
@@ -24,13 +24,9 @@
               <h4>{{ user_nama }}</h4>
             </div>
             <v-divider></v-divider>
-            <v-btn depressed text @click="profil()" block>
-              Profil
-            </v-btn>
+            <v-btn depressed text @click="profil()" block> Profil </v-btn>
             <v-divider></v-divider>
-            <v-btn depressed text @click="logOut()" block>
-              Sigin Out
-            </v-btn>
+            <v-btn depressed text @click="logOut()" block> Sigin Out </v-btn>
           </div>
         </v-list-item-content>
       </v-card>
@@ -46,9 +42,11 @@ export default {
   data: () => ({
     session: "",
     drawer: null,
-    
+
     user_nama: "",
     user_foto: "",
+
+    title: "pemetaan potensi desa berbasis open data di kawasan teluk tomini",
   }),
 
   async mounted() {
