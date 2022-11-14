@@ -1,11 +1,13 @@
 <template>
   <div style="background: #f5f5f5">
     <v-row no-gutters>
-      <v-img
-        src="@/assets/img/teluk-tomini-web-2.png"
-        max-height="100vh"
-        class="hidden-sm-and-down"
-      ></v-img>
+      <v-col cols="12" md="6">
+        <v-img
+          src="@/assets/img/teluk-tomini-web-2.png"
+          max-height="100vh"
+          class="hidden-sm-and-down"
+        ></v-img>
+      </v-col>
       <v-col cols="12" md="6" class="pa-10 my-auto">
         <div class="ma-3">
           <div class="mb-4">
